@@ -26,18 +26,18 @@ public class MessageService implements Observable<MessageChangedEvent> {
         this.messages = messages;
     }
 
-    public void send(long idSender, long idGroup, String text, Long reply) throws ValidationException, RepositoryException {
-        Message message = new Message(idSender, idGroup, text);
+    public void send(long senderId, long chatId, String text, Long reply) throws ValidationException, RepositoryException {
+        Message message = new Message(senderId, chatId, text);
         message.setReply(reply);
         messages.save(message);
         notifyObservers(new MessageChangedEvent(ChangeEventType.ADD, message));
     }
 
-    public void reply(long replyAt, long idSender, String text) throws ValidationException, ServiceException, RepositoryException {
+    public void reply(long replyAt, long senderId, String text) throws ValidationException, ServiceException, RepositoryException {
         Message message = messages.findOne(replyAt);
         if(message == null)
-            throw new ServiceException("No message with the given id.");
-        Message reply = new Message(idSender, message.getChatId(), text);
+            throw new ServiceException("Message doesn't exists!");
+        Message reply = new Message(senderId, message.getChatId(), text);
         reply.setReply(replyAt);
         messages.save(reply);
         notifyObservers(new MessageChangedEvent(ChangeEventType.ADD, message));
@@ -57,7 +57,7 @@ public class MessageService implements Observable<MessageChangedEvent> {
     public Message findOne(long id) throws ServiceException {
         Message message= messages.findOne(id);
         if(message == null)
-            throw new ServiceException("No message with the given id.");
+            throw new ServiceException("Message doesn't exists!");
         return message;
     }
 

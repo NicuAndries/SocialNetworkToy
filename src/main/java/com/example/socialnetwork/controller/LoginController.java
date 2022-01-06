@@ -52,7 +52,7 @@ public class LoginController {
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
-        stage.setTitle("Mandarin");
+        stage.setTitle("Smeshariki");
         stage.setScene(scene);
         stage.show();
     }

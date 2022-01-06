@@ -15,6 +15,8 @@
             <children>
                 <Pane fx:id="friendsPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" />
                 <Pane fx:id="findFriendsPane" prefHeight="642.0" prefWidth="614.0" style="-fx-background-color: white;" />
+            <Pane fx:id="messagePane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" />
+            <Pane fx:id="eventPane" prefHeight="200.0" prefWidth="200.0" />
             <Pane fx:id="profilePane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
                <children>
                   <ImageView fitHeight="254.0" fitWidth="651.0" pickOnBounds="true" preserveRatio="true">
@@ -22,9 +24,9 @@
                         <Image url="@../../../images/profileBackground.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="profileImage" fitHeight="236.0" fitWidth="218.0" layoutX="231.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="profileImage" fitHeight="236.0" fitWidth="218.0" layoutX="216.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/imagine3.jpg" />
+                        <Image url="@../../../images/nicu.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="profileNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="178.0" layoutY="359.0" prefHeight="17.0" prefWidth="294.0" text="Andries Nicolae">
@@ -33,8 +35,6 @@
                      </font>
                   </Label>
                </children></Pane>
-            <Pane fx:id="messagePane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" />
-            <Pane fx:id="eventPane" prefHeight="200.0" prefWidth="200.0" />
             </children>
         </StackPane>
         <Button fx:id="findFriendsButton" alignment="CENTER" layoutX="4.0" layoutY="335.0" mnemonicParsing="false" onAction="#onFindFriendsButton" style="-fx-background-color: transparent;" text="Find Friends" textFill="WHITE">

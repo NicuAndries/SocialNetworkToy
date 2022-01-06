@@ -108,9 +108,9 @@ public class ChatController implements Observer<MessageChangedEvent> {
     }
 
     public void populateChat(Long chatId) {
-      //  List<Message> messages = service.getChatMessages(chatId);
-      //  messages.sort(Comparator.comparing(Message::getTime));
-        messageObservableList.setAll(service.getChatMessages(chatId));
+        List<Message> messages = service.getChatMessages(chatId);
+        messages.sort(Comparator.comparing(Message::getTime));
+        messageObservableList.setAll(messages);
     }
 
     public void populate() {

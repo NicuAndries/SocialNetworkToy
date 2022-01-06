@@ -54,10 +54,4 @@ public class FriendRequest extends Entity<Pair<Long, Long>> {
         this.date = date;
     }
 
-    @Override
-    public String toString() {
-        return "Id sender: " + userSenderId +
-                " Id receiver: " + userReceiverId +
-                " status=" + status;
-    }
 }
