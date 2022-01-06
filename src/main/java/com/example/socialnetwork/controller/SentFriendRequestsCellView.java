@@ -1,11 +1,8 @@
 package com.example.socialnetwork.controller;
 
 import com.example.socialnetwork.domain.User;
-import com.example.socialnetwork.dto.RequestDTO;
-import com.example.socialnetwork.exceptions.RepositoryException;
 import com.example.socialnetwork.exceptions.ServiceException;
-import com.example.socialnetwork.exceptions.ValidationException;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -28,10 +25,10 @@ public class SentFriendRequestsCellView extends ListCell<User> {
     public Label labelBirthdata;
     @FXML
     public ImageView userImage;
-    private Service service;
+    private Page page;
 
-    public SentFriendRequestsCellView(Service service) {
-        this.service = service;
+    public SentFriendRequestsCellView(Page page) {
+        this.page = page;
         try {
             FXMLLoader modelLoader = new FXMLLoader();
             modelLoader.setController(this);
@@ -56,7 +53,7 @@ public class SentFriendRequestsCellView extends ListCell<User> {
 
             cancelRequestButton.setOnAction(event -> {
                 try {
-                    service.deleteSentFriendRequest(getItem().getId());
+                    page.deleteSentFriendRequest(getItem().getId());
                     getListView().refresh();
                     super.updateItem(user, true);
                 } catch (ServiceException exception) {

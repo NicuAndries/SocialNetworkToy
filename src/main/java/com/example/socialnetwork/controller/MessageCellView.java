@@ -2,22 +2,18 @@ package com.example.socialnetwork.controller;
 
 import com.example.socialnetwork.domain.Message;
 import com.example.socialnetwork.domain.User;
-import com.example.socialnetwork.dto.RequestDTO;
 import com.example.socialnetwork.exceptions.ServiceException;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
 
@@ -30,10 +26,10 @@ public class MessageCellView extends ListCell<Message> {
     public Button messageText;
     public HBox hBox;
     public VBox vBox;
-    private Service service;
+    private Page page;
 
-    public MessageCellView(Service service) {
-        this.service = service;
+    public MessageCellView(Page page) {
+        this.page = page;
         try {
             FXMLLoader modelLoader = new FXMLLoader();
             modelLoader.setController(this);
@@ -53,12 +49,12 @@ public class MessageCellView extends ListCell<Message> {
             setGraphic(null);
         } else {
 
-            if (friend.getUserSenderId().equals(service.getIdUser())) {
+            if (friend.getUserSenderId().equals(page.getIdUser())) {
                 if (friend.getReply() == null) {
                     try {
                         hBox.getChildren().clear();
 
-                        User user = service.getServiceUser().findOne(friend.getUserSenderId());
+                        User user = page.getServiceUser().findOne(friend.getUserSenderId());
                         Image image = new Image(user.getProfilePicture());
 
                         Button button = new Button(friend.getText());
@@ -85,11 +81,11 @@ public class MessageCellView extends ListCell<Message> {
                     try {
                         hBox.getChildren().clear();
                         vBox = new VBox();
-                        User user = service.getServiceUser().findOne(friend.getUserSenderId());
+                        User user = page.getServiceUser().findOne(friend.getUserSenderId());
 
                         try {
-                            Message message = service.getServiceMessage().findOne(friend.getReply());
-                            User user1 = service.getServiceUser().findOne(message.getUserSenderId());
+                            Message message = page.getServiceMessage().findOne(friend.getReply());
+                            User user1 = page.getServiceUser().findOne(message.getUserSenderId());
 
                             Button buttonReply = new Button(message.getText());
                             buttonReply.setStyle("-fx-background-color: #8a8d91; -fx-border-radius: 30; -fx-background-radius: 30;");
@@ -139,7 +135,7 @@ public class MessageCellView extends ListCell<Message> {
                         hBox.getChildren().clear();
                         hBox.setLayoutX(0);
 
-                        User user = service.getServiceUser().findOne(friend.getUserSenderId());
+                        User user = page.getServiceUser().findOne(friend.getUserSenderId());
                         Image image = new Image(user.getProfilePicture());
 
                         Button button = new Button(friend.getText());
@@ -167,11 +163,11 @@ public class MessageCellView extends ListCell<Message> {
                         hBox.getChildren().clear();
                         vBox = new VBox();
                         hBox.setLayoutX(0);
-                        User user = service.getServiceUser().findOne(friend.getUserSenderId());
+                        User user = page.getServiceUser().findOne(friend.getUserSenderId());
 
                         try {
-                            Message message = service.getServiceMessage().findOne(friend.getReply());
-                            User user1 = service.getServiceUser().findOne(message.getUserSenderId());
+                            Message message = page.getServiceMessage().findOne(friend.getReply());
+                            User user1 = page.getServiceUser().findOne(message.getUserSenderId());
 
                             Button buttonReply = new Button(message.getText());
                             buttonReply.setStyle("-fx-background-color: #8a8d91; -fx-border-radius: 30; -fx-background-radius: 30;");

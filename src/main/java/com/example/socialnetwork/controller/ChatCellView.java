@@ -5,14 +5,11 @@ import com.example.socialnetwork.domain.User;
 import com.example.socialnetwork.exceptions.RepositoryException;
 import com.example.socialnetwork.exceptions.ServiceException;
 import com.example.socialnetwork.exceptions.ValidationException;
-import com.example.socialnetwork.service.Service;
-import javafx.beans.value.ObservableValue;
+import com.example.socialnetwork.service.Page;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -27,10 +24,10 @@ public class ChatCellView extends ListCell<Chat> {
     public ImageView userImage;
     public Button deleteChatButton;
     public HBox hBox;
-    private Service service;
+    private Page page;
 
-    public ChatCellView(Service service) {
-        this.service = service;
+    public ChatCellView(Page page) {
+        this.page = page;
         try {
             FXMLLoader modelLoader = new FXMLLoader();
             modelLoader.setController(this);
@@ -50,9 +47,9 @@ public class ChatCellView extends ListCell<Chat> {
             setStyle("-fx-background-color: #242131");
             setGraphic(null);
         } else {
-            if(chat.getMembers().size() == 2 && service.getIdUser().equals(chat.getMembers().get(0))) {
+            if(chat.getMembers().size() == 2 && page.getIdUser().equals(chat.getMembers().get(0))) {
                 try {
-                    User user = service.getServiceUser().findOne(chat.getMembers().get(1));
+                    User user = page.getServiceUser().findOne(chat.getMembers().get(1));
                     Image image = new Image(user.getProfilePicture());
                     userImage.setImage(image);
                 } catch (ServiceException e) {
@@ -60,11 +57,11 @@ public class ChatCellView extends ListCell<Chat> {
                 }
                 List<String> name = List.of(chat.getName().split(" "));
                 chatName.setText(name.get(2) + " " + name.get(3));
-            } else if(chat.getMembers().size() == 2 && service.getIdUser().equals(chat.getMembers().get(1))) {
+            } else if(chat.getMembers().size() == 2 && page.getIdUser().equals(chat.getMembers().get(1))) {
                 List<String> name = List.of(chat.getName().split(" "));
                 chatName.setText(name.get(0) + " " + name.get(1));
                 try {
-                    User user = service.getServiceUser().findOne(chat.getMembers().get(0));
+                    User user = page.getServiceUser().findOne(chat.getMembers().get(0));
                     Image image = new Image(user.getProfilePicture());
                     userImage.setImage(image);
                 } catch (ServiceException e) {
@@ -77,9 +74,9 @@ public class ChatCellView extends ListCell<Chat> {
                 userImage.setImage(image);
             }
             deleteChatButton.setOnAction(event -> {
-                service.deleteChat(getItem());
+                page.deleteChat(getItem());
                 try {
-                    service.sendMessage(1L, null, null);
+                    page.sendMessage(1L, null, null);
                 } catch (ValidationException | RepositoryException e) {
                     e.printStackTrace();
                 }

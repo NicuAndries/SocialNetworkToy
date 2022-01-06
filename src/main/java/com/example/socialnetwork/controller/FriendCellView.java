@@ -2,7 +2,7 @@ package com.example.socialnetwork.controller;
 
 import com.example.socialnetwork.domain.Friend;
 import com.example.socialnetwork.exceptions.ServiceException;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,10 +20,10 @@ public class FriendCellView extends ListCell<Friend> {
     public Label labelBirthdata;
     public ImageView userImage;
     private FXMLLoader modelLoader;
-    private Service service;
+    private Page page;
 
-    public FriendCellView(Service service) {
-        this.service = service;
+    public FriendCellView(Page page) {
+        this.page = page;
         try {
             FXMLLoader modelLoader = new FXMLLoader();
             modelLoader.setController(this);
@@ -48,7 +48,7 @@ public class FriendCellView extends ListCell<Friend> {
             userImage.setImage(image);
             unfriendButton.setOnAction(event -> {
                 try {
-                    service.deleteFriendship(getItem().getId());
+                    page.deleteFriendship(getItem().getId());
                     getListView().refresh();
                     super.updateItem(friend, true);
                 } catch (ServiceException exception) {

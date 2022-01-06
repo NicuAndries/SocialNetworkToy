@@ -1,8 +1,7 @@
 package com.example.socialnetwork.controller;
 
 import com.example.socialnetwork.domain.Friend;
-import com.example.socialnetwork.exceptions.ServiceException;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,10 +19,10 @@ public class ChatCreatorCellView extends ListCell<Friend> {
     public Label labelBirthdata;
     public ImageView userImage;
     private FXMLLoader modelLoader;
-    private Service service;
+    private Page page;
 
-    public ChatCreatorCellView(Service service) {
-        this.service = service;
+    public ChatCreatorCellView(Page page) {
+        this.page = page;
         try {
             FXMLLoader modelLoader = new FXMLLoader();
             modelLoader.setController(this);

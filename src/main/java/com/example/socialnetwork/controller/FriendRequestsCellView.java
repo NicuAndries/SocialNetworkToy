@@ -4,7 +4,7 @@ import com.example.socialnetwork.dto.RequestDTO;
 import com.example.socialnetwork.exceptions.RepositoryException;
 import com.example.socialnetwork.exceptions.ServiceException;
 import com.example.socialnetwork.exceptions.ValidationException;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,10 +22,10 @@ public class FriendRequestsCellView extends ListCell<RequestDTO> {
     public Label labelBirthdata;
     public ImageView userImage;
     public AnchorPane friendRequestsPane;
-    private Service service;
+    private Page page;
 
-    public FriendRequestsCellView(Service service) {
-        this.service = service;
+    public FriendRequestsCellView(Page page) {
+        this.page = page;
         try {
             FXMLLoader modelLoader = new FXMLLoader();
             modelLoader.setController(this);
@@ -50,7 +50,7 @@ public class FriendRequestsCellView extends ListCell<RequestDTO> {
             userImage.setImage(image);
             addFriendButton.setOnAction(event -> {
                 try {
-                    service.acceptFriendRequest(getItem().getIdUser());
+                    page.acceptFriendRequest(getItem().getIdUser());
                     getListView().refresh();
                     super.updateItem(friend, true);
                 } catch (ServiceException | ValidationException | RepositoryException exception) {
@@ -59,7 +59,7 @@ public class FriendRequestsCellView extends ListCell<RequestDTO> {
             });
             cancelFriendButton.setOnAction(event -> {
                 try {
-                    service.deleteFriendship(getItem().getIdUser());
+                    page.deleteFriendship(getItem().getIdUser());
                     getListView().refresh();
                     super.updateItem(friend, true);
                 } catch (ServiceException exception) {

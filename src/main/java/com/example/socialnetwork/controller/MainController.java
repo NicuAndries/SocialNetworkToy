@@ -1,11 +1,10 @@
 package com.example.socialnetwork.controller;
 
-import com.example.socialnetwork.domain.Chat;
 import com.example.socialnetwork.domain.User;
 import com.example.socialnetwork.exceptions.ServiceException;
 import com.example.socialnetwork.service.FriendRequestService;
 import com.example.socialnetwork.service.FriendshipService;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -30,7 +28,7 @@ public class MainController {
     public Label profileNameLabel;
     public Pane messagePane;
     public ImageView profileImage;
-    private Service service;
+    private Page page;
     public Button friendsButton;
     public Button findFriendsButton;
     public Pane findFriendsPane;
@@ -47,18 +45,18 @@ public class MainController {
 
     private FilteredList<User> filteredList;
 
-    public void setService(Service service, FriendRequestService friendRequestService, Long user_id) {
+    public void setService(Page page, FriendRequestService friendRequestService, Long user_id) {
         this.friendRequestService = friendRequestService;
-        this.service = service;
+        this.page = page;
         try {
-            this.service.setIdUser(user_id);
+            this.page.setIdUser(user_id);
         } catch (CredentialException exception) {
             System.out.println(exception.getMessage());
         }
-        friendsController.setService(service, service.getServiceFriendship());
-        findFriendsController.setService(service, service.getServiceFriendship());
-        messageController.setService(service);
-        eventController.setService(service);
+        friendsController.setService(page, page.getServiceFriendship());
+        findFriendsController.setService(page, page.getServiceFriendship());
+        messageController.setService(page);
+        eventController.setService(page);
         profilePane.toFront();
         setProfileInformation();
     }
@@ -97,8 +95,8 @@ public class MainController {
 
     public void setProfileInformation() {
         try {
-            profileNameLabel.setText(service.getUser().getFirstName() + " " + service.getUser().getLastName());
-            profileImage.setImage(new Image(service.getUser().getProfilePicture()));
+            profileNameLabel.setText(page.getUser().getFirstName() + " " + page.getUser().getLastName());
+            profileImage.setImage(new Image(page.getUser().getProfilePicture()));
         } catch (ServiceException exception) {
             System.out.println(exception.getMessage());
         }

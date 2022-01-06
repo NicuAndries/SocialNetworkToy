@@ -3,7 +3,7 @@ package com.example.socialnetwork.controller;
 import com.example.socialnetwork.Main;
 import com.example.socialnetwork.service.FriendRequestService;
 import com.example.socialnetwork.service.LoginService;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import com.example.socialnetwork.service.SignUpService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -31,13 +31,13 @@ public class LoginController {
 
     private LoginService loginService;
     private SignUpService signUpService;
-    private Service service;
+    private Page page;
     private FriendRequestService friendRequestService;
 
-    public void setServices(LoginService loginService, SignUpService signUpService, Service service, FriendRequestService friendRequestService){
+    public void setServices(LoginService loginService, SignUpService signUpService, Page page, FriendRequestService friendRequestService){
         this.loginService = loginService;
         this.signUpService = signUpService;
-        this.service = service;
+        this.page = page;
         this.friendRequestService = friendRequestService;
     }
 
@@ -84,7 +84,7 @@ public class LoginController {
         try {
             scene = new Scene(fxmlLoader.load());
             MainController profileController = fxmlLoader.getController();
-            profileController.setService(service, friendRequestService, user_id);
+            profileController.setService(page, friendRequestService, user_id);
             profileController.setStage(loginStage);
            // profileController.populateWithData();
         } catch (IOException e) {

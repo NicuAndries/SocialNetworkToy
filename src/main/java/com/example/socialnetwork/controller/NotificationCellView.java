@@ -1,8 +1,7 @@
 package com.example.socialnetwork.controller;
 
 import com.example.socialnetwork.domain.Eveniment;
-import com.example.socialnetwork.dto.RequestDTO;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -17,10 +16,10 @@ public class NotificationCellView extends ListCell<Eveniment> {
     public Label labelHistoryInfo;
     public ImageView userImage;
     public AnchorPane notificationCell;
-    private Service service;
+    private Page page;
 
-    public NotificationCellView(Service service) {
-        this.service = service;
+    public NotificationCellView(Page page) {
+        this.page = page;
         try {
             FXMLLoader modelLoader = new FXMLLoader();
             modelLoader.setController(this);

@@ -2,7 +2,7 @@ package com.example.socialnetwork.controller;
 
 import com.example.socialnetwork.domain.Eveniment;
 import com.example.socialnetwork.domain.EvenimentNotification;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,18 +21,18 @@ public class NotificationController implements Initializable {
     private ObservableList<Eveniment> evenimentsObservableList = FXCollections.observableArrayList();
     public Button backButton;
     public Pane notificationPane;
-    Service service;
+    Page page;
 
-    public void setService(Service service) {
-        this.service = service;
+    public void setService(Page page) {
+        this.page = page;
         populate();
     }
 
     public void populate() {
-        List<EvenimentNotification> evenimentNotificationList = service.populateNotificationList();
+        List<EvenimentNotification> evenimentNotificationList = page.populateNotificationList();
         List<Eveniment> eveniments = new ArrayList<>();
         for (EvenimentNotification evenimentNotification : evenimentNotificationList) {
-            Eveniment eveniment = service.findOneEveniment(evenimentNotification.getEveniment_id());
+            Eveniment eveniment = page.findOneEveniment(evenimentNotification.getEveniment_id());
             if (eveniment != null)
                 eveniments.add(eveniment);
         }
@@ -46,6 +46,6 @@ public class NotificationController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         notificationListView.setItems(evenimentsObservableList);
-        notificationListView.setCellFactory(userListView -> new NotificationCellView(service));
+        notificationListView.setCellFactory(userListView -> new NotificationCellView(page));
     }
 }

@@ -1,11 +1,8 @@
 package com.example.socialnetwork.controller;
 
-import com.example.socialnetwork.domain.Friend;
 import com.example.socialnetwork.dto.RequestDTO;
-import com.example.socialnetwork.exceptions.ServiceException;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -19,10 +16,10 @@ public class HistoryRequestsCellView extends ListCell<RequestDTO> {
     public AnchorPane historyCell;
     public ImageView userImage;
     public Label labelHistoryInfo;
-    private Service service;
+    private Page page;
 
-    public HistoryRequestsCellView(Service service) {
-        this.service = service;
+    public HistoryRequestsCellView(Page page) {
+        this.page = page;
         try {
             FXMLLoader modelLoader = new FXMLLoader();
             modelLoader.setController(this);

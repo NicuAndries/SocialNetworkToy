@@ -2,24 +2,18 @@ package com.example.socialnetwork.controller;
 
 import com.example.socialnetwork.domain.Chat;
 import com.example.socialnetwork.domain.Friend;
-import com.example.socialnetwork.domain.Message;
-import com.example.socialnetwork.domain.User;
 import com.example.socialnetwork.exceptions.RepositoryException;
 import com.example.socialnetwork.exceptions.ServiceException;
 import com.example.socialnetwork.exceptions.ValidationException;
-import com.example.socialnetwork.service.FriendshipService;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -35,13 +29,13 @@ public class ChatCreatorController implements Initializable {
     public TextField toTextField;
     private ObservableList<Friend> friendsObservableList = FXCollections.observableArrayList();
     List<Long> usersId;
-    Service service;
+    Page page;
     Long numberOfSelectedElements;
 
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
         friendListView.setItems(friendsObservableList);
-        friendListView.setCellFactory(param -> new ChatCreatorCellView(service));
+        friendListView.setCellFactory(param -> new ChatCreatorCellView(page));
 
         friendListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -50,7 +44,7 @@ public class ChatCreatorController implements Initializable {
             numberOfSelectedElements = (long) selectedItems.size();
             StringBuilder builder = new StringBuilder();
             usersId = new ArrayList<>();
-            usersId.add(service.getIdUser());
+            usersId.add(page.getIdUser());
             for (int i=0; i<selectedItems.size(); i++) {
                 builder.append(selectedItems.get(i).getFirstName()).append(" ").append(selectedItems.get(i).getLastName()).append("   ");
                 usersId.add(selectedItems.get(i).getId());
@@ -66,15 +60,15 @@ public class ChatCreatorController implements Initializable {
 
     public void populate() {
         try {
-            List<Friend> friends = service.getListOfFriends();
+            List<Friend> friends = page.getListOfFriends();
             friendsObservableList.setAll(friends);
         } catch (ServiceException exception) {
             System.out.println(exception.getMessage());
         }
     }
 
-    public void setService(Service service) {
-        this.service = service;
+    public void setService(Page page) {
+        this.page = page;
         populate();
     }
 
@@ -82,15 +76,15 @@ public class ChatCreatorController implements Initializable {
         Chat chat = null;
         try {
             if (numberOfSelectedElements == 1) {
-                List<Chat> chatList = service.getAllChats();
-                String chatName = service.getUser().getFirstName() + " " + service.getUser().getLastName() + " " + chatNameTextField.getText();
+                List<Chat> chatList = page.getAllChats();
+                String chatName = page.getUser().getFirstName() + " " + page.getUser().getLastName() + " " + chatNameTextField.getText();
                 for (Chat chat1 : chatList)
                     if (chat1.getMembers().size() == 2 && chat1.getName().equals(chatName)) {
-                        service.sendMessage(chat1.getId(), createChatMessageTextField.getText(), null);
+                        page.sendMessage(chat1.getId(), createChatMessageTextField.getText(), null);
                         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
                         return;
                     }
-                chat = new Chat(service.getUser().getFirstName() + " " + service.getUser().getLastName() + " " + chatNameTextField.getText());
+                chat = new Chat(page.getUser().getFirstName() + " " + page.getUser().getLastName() + " " + chatNameTextField.getText());
             }
             else
                 chat = new Chat(chatNameTextField.getText());
@@ -98,9 +92,9 @@ public class ChatCreatorController implements Initializable {
             System.out.println(e.getMessage());
         }
         chat.setMembers(usersId);
-        Chat chat1 = service.saveChat(chat);
+        Chat chat1 = page.saveChat(chat);
         try {
-            service.sendMessage(chat1.getId(), createChatMessageTextField.getText(), null);
+            page.sendMessage(chat1.getId(), createChatMessageTextField.getText(), null);
         } catch (ValidationException | RepositoryException e) {
             e.printStackTrace();
         }

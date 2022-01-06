@@ -35,13 +35,13 @@ public class Main extends Application {
         ChatService chatService = new ChatService(chatRepository);
         EvenimentNotificationDatabaseRepository evenimentNotificationDatabaseRepository = new EvenimentNotificationDatabaseRepository(Constants.URL, Constants.USERNAME, Constants.PASSWORD);
         EvenimentService evenimentService = new EvenimentService(evenimentRepository, evenimentNotificationDatabaseRepository);
-        Service service = new Service(userService, friendshipService, friendRequestService, messageService, chatService, evenimentService);
+        Page page = new Page(userService, friendshipService, friendRequestService, messageService, chatService, evenimentService);
         Security security = new Security();
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login.fxml"));
         BorderPane root = fxmlLoader.load();
         LoginController loginController = fxmlLoader.getController();
-        loginController.setServices(loginService, signUpService, service, friendRequestService);
+        loginController.setServices(loginService, signUpService, page, friendRequestService);
 
         Scene scene = new Scene(root);
         stage.setTitle("Hello!");

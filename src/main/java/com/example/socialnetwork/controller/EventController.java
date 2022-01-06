@@ -1,14 +1,8 @@
 package com.example.socialnetwork.controller;
 
 import com.example.socialnetwork.domain.Eveniment;
-import com.example.socialnetwork.domain.EvenimentNotification;
-import com.example.socialnetwork.domain.Friend;
-import com.example.socialnetwork.exceptions.ServiceException;
-import com.example.socialnetwork.service.FriendshipService;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import com.example.socialnetwork.utils.events.EvenimentChangedEvent;
-import com.example.socialnetwork.utils.events.Event;
-import com.example.socialnetwork.utils.events.FriendshipChangedEvent;
 import com.example.socialnetwork.utils.observer.Observer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
@@ -37,22 +30,22 @@ public class EventController implements Observer<EvenimentChangedEvent> {
     public Pane notificationPane;
     public Pane eventPane;
     private ObservableList<Eveniment> evenimentsObservableList = FXCollections.observableArrayList();
-    private Service service;
+    private Page page;
     NotificationController notificationController;
     int notificationCount;
 
-    public void setService(Service service) {
-        this.service = service;
-        this.service.getEvenimentService().addObserver(this);
-        service.deletePastEvents();
-        service.sendNotifications();
-        notificationCount = service.populateNotificationList().size();
+    public void setService(Page page) {
+        this.page = page;
+        this.page.getEvenimentService().addObserver(this);
+        page.deletePastEvents();
+        page.sendNotifications();
+        notificationCount = page.populateNotificationList().size();
         if (notificationCount != 0) {
             notificationCircle.setFill(Color.WHITE);
             numberOfNotifications.setText(String.valueOf(notificationCount));
         }
         eventPane.toFront();
-        notificationController.setService(service);
+        notificationController.setService(page);
         populate();
     }
 
@@ -68,11 +61,11 @@ public class EventController implements Observer<EvenimentChangedEvent> {
         notificationCircle.setFill(Color.TRANSPARENT);
         numberOfNotifications.setText("");
         eventsListView.setItems(evenimentsObservableList);
-        eventsListView.setCellFactory(param -> new EventCellView(service));
+        eventsListView.setCellFactory(param -> new EventCellView(page));
     }
 
     public void populate() {
-        List<Eveniment> eveniments = service.getEvents();
+        List<Eveniment> eveniments = page.getEvents();
         evenimentsObservableList.setAll(eveniments);
     }
 
@@ -90,7 +83,7 @@ public class EventController implements Observer<EvenimentChangedEvent> {
         try {
             scene = new Scene(fxmlLoader.load());
             EventCreatorController eventCreatorController  = fxmlLoader.getController();
-            eventCreatorController.setService(service);
+            eventCreatorController.setService(page);
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
@@ -102,7 +95,7 @@ public class EventController implements Observer<EvenimentChangedEvent> {
     public void onCheckNotificationButton(ActionEvent actionEvent) {
         notificationPane.toFront();
         eventPane.toBack();
-        service.readNotifications();
+        page.readNotifications();
         notificationCircle.setFill(Color.TRANSPARENT);
         numberOfNotifications.setText("");
     }

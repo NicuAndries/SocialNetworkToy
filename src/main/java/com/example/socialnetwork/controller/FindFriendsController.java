@@ -2,7 +2,7 @@ package com.example.socialnetwork.controller;
 
 import com.example.socialnetwork.domain.User;
 import com.example.socialnetwork.service.FriendshipService;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import com.example.socialnetwork.utils.events.RequestChangedEvent;
 import com.example.socialnetwork.utils.observer.Observer;
 import javafx.collections.FXCollections;
@@ -30,7 +30,7 @@ public class FindFriendsController implements Observer<RequestChangedEvent> {
     public Pane historyRequestsPane;
     public Pane friendRequestsPane;
     public Pane sentFriendRequestsPane;
-    private Service service;
+    private Page page;
     private FriendshipService friendshipService;
     private FilteredList<User> filteredList;
     private HistoryRequestsController historyRequestsController;
@@ -41,7 +41,7 @@ public class FindFriendsController implements Observer<RequestChangedEvent> {
     @FXML
     public void initialize() {
         findFriendListView.setItems(findfriendsObservableList);
-        findFriendListView.setCellFactory(userListView -> new FindFriendsCellView(service));
+        findFriendListView.setCellFactory(userListView -> new FindFriendsCellView(page));
         try{
             FXMLLoader historyLoader = new FXMLLoader(getClass().getClassLoader().getResource("historyRequestsPane.fxml"));
             historyRequestsPane.getChildren().add(historyLoader.load());
@@ -62,22 +62,22 @@ public class FindFriendsController implements Observer<RequestChangedEvent> {
     }
 
     public void populate() {
-        List<User> friends = service.getAllNonFriends();
+        List<User> friends = page.getAllNonFriends();
         findfriendsObservableList.setAll(friends);
     }
 
-    public void setService(Service service, FriendshipService friendshipService) {
-        this.service = service;
+    public void setService(Page page, FriendshipService friendshipService) {
+        this.page = page;
         this.friendshipService = friendshipService;
-        service.getServiceFriendRequest().addObserver(this);
+        page.getServiceFriendRequest().addObserver(this);
         findFriendsPane.toFront();
         historyRequestsPane.toBack();
         friendRequestsPane.toBack();
         sentFriendRequestsPane.toBack();
 
-        historyRequestsController.setService(service);
-        friendRequestsController.setService(service, friendshipService);
-        sentFriendRequestsController.setService(service);
+        historyRequestsController.setService(page);
+        friendRequestsController.setService(page, friendshipService);
+        sentFriendRequestsController.setService(page);
 
         populate();
     }
@@ -89,7 +89,7 @@ public class FindFriendsController implements Observer<RequestChangedEvent> {
         } else {
             filteredList.setPredicate(s -> s.getFirstName().contains(filter));
         }
-        findFriendListView.setCellFactory(userListView -> new FindFriendsCellView(service));
+        findFriendListView.setCellFactory(userListView -> new FindFriendsCellView(page));
     }
 
     @Override

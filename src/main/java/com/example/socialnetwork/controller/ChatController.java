@@ -1,14 +1,12 @@
 package com.example.socialnetwork.controller;
 
-import com.example.socialnetwork.Main;
 import com.example.socialnetwork.domain.Chat;
 import com.example.socialnetwork.domain.Message;
 import com.example.socialnetwork.domain.User;
 import com.example.socialnetwork.exceptions.RepositoryException;
 import com.example.socialnetwork.exceptions.ServiceException;
 import com.example.socialnetwork.exceptions.ValidationException;
-import com.example.socialnetwork.service.Service;
-import com.example.socialnetwork.utils.events.ChatChangedEvent;
+import com.example.socialnetwork.service.Page;
 import com.example.socialnetwork.utils.events.MessageChangedEvent;
 import com.example.socialnetwork.utils.observer.Observer;
 import javafx.beans.value.ObservableValue;
@@ -17,16 +15,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Light;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -48,7 +42,7 @@ public class ChatController implements Observer<MessageChangedEvent> {
     public Button cancelReplyButton;
     private ObservableList<Chat> chatObservableList = FXCollections.observableArrayList();
     private ObservableList<Message> messageObservableList = FXCollections.observableArrayList();
-    private Service service;
+    private Page page;
     private Long replyId;
     private Long chatId;
 
@@ -56,7 +50,7 @@ public class ChatController implements Observer<MessageChangedEvent> {
     public void initialize() {
         chatListView.setItems(chatObservableList);
         toReplyAnchorPane.toBack();
-        chatListView.setCellFactory(param -> new ChatCellView(service));
+        chatListView.setCellFactory(param -> new ChatCellView(page));
         userStatus.setVisible(false);
         messagesChatName.setVisible(false);
         messageListView.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource("listcell.css")).toExternalForm());
@@ -66,7 +60,7 @@ public class ChatController implements Observer<MessageChangedEvent> {
             if (selectedMessage != null) {
                 toMessageLabel.setText("Message : " + selectedMessage.getText());
                 try {
-                    User user = service.getServiceUser().findOne(selectedMessage.getUserSenderId());
+                    User user = page.getServiceUser().findOne(selectedMessage.getUserSenderId());
                     toReplyLabel.setText("Replying to : " + user.getFirstName() + " " + user.getLastName());
                     replyId = selectedMessage.getId();
                 } catch (ServiceException exception) {
@@ -80,13 +74,13 @@ public class ChatController implements Observer<MessageChangedEvent> {
             Chat selectedItem = chatListView.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
                 chatId = selectedItem.getId();
-                if(selectedItem.getMembers().size() == 2 && service.getIdUser().equals(selectedItem.getMembers().get(0))) {
+                if(selectedItem.getMembers().size() == 2 && page.getIdUser().equals(selectedItem.getMembers().get(0))) {
                     List<String> name = List.of(selectedItem.getName().split(" "));
                     userStatus.setVisible(true);
                     messagesChatName.setVisible(true);
                     messagesChatName.setText(name.get(2) + " " + name.get(3));
                     userStatus.setText("Offline");
-                } else if(selectedItem.getMembers().size() == 2 && service.getIdUser().equals(selectedItem.getMembers().get(1))) {
+                } else if(selectedItem.getMembers().size() == 2 && page.getIdUser().equals(selectedItem.getMembers().get(1))) {
                     userStatus.setVisible(true);
                     messagesChatName.setVisible(true);
                     List<String> name = List.of(selectedItem.getName().split(" "));
@@ -102,32 +96,32 @@ public class ChatController implements Observer<MessageChangedEvent> {
             }
             populateChat(chatId);
             messageListView.setItems(messageObservableList);
-            messageListView.setCellFactory(param -> new MessageCellView(service));
+            messageListView.setCellFactory(param -> new MessageCellView(page));
             messageListView.scrollTo(messageListView.getItems().size());
         });
     }
 
     public void populateChat(Long chatId) {
-        List<Message> messages = service.getChatMessages(chatId);
+        List<Message> messages = page.getChatMessages(chatId);
         messages.sort(Comparator.comparing(Message::getTime));
         messageObservableList.setAll(messages);
     }
 
     public void populate() {
-        List<Chat> chats = service.getAllChats();
+        List<Chat> chats = page.getAllChats();
         chatObservableList.setAll(chats);
     }
 
-    public void setService(Service service) {
-        this.service = service;
-        this.service.getServiceMessage().addObserver(this);
+    public void setService(Page page) {
+        this.page = page;
+        this.page.getServiceMessage().addObserver(this);
         populate();
     }
 
     public void onSendMessageButton(ActionEvent mouseEvent) {
         String text = messageTextField.getText();
         try {
-            service.sendMessage(chatId, text, replyId);
+            page.sendMessage(chatId, text, replyId);
             toReplyAnchorPane.toBack();
             replyId = null;
         } catch (ValidationException | RepositoryException e) {
@@ -151,7 +145,7 @@ public class ChatController implements Observer<MessageChangedEvent> {
         try {
             scene = new Scene(fxmlLoader.load());
             ChatCreatorController chatCreatorController  = fxmlLoader.getController();
-            chatCreatorController.setService(service);
+            chatCreatorController.setService(page);
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }

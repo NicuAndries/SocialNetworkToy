@@ -1,78 +1,344 @@
 package com.example.socialnetwork.service;
 
+import com.example.socialnetwork.domain.*;
+import com.example.socialnetwork.dto.FriendDTO;
+import com.example.socialnetwork.dto.RequestDTO;
+import com.example.socialnetwork.exceptions.RepositoryException;
+import com.example.socialnetwork.exceptions.ServiceException;
+import com.example.socialnetwork.exceptions.ValidationException;
+
+import javax.security.auth.login.CredentialException;
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class Page {
-  /*  private Service service;
-    private String firstName;
-    private String lastName;
-    private String gender;
-    private String profilePicture;
-    private LocalDate birthdate;
+    private UserService serviceUser;
+    private FriendshipService serviceFriendship;
+    private FriendRequestService serviceFriendRequest;
+    private MessageService serviceMessage;
+    private ChatService chatService;
+    private EvenimentService evenimentService;
+    private Long idUser;
 
-    public Page(Service service) {
-        this.service = service;
-        firstName = user.getFirstName();
-        lastName = user.getLastName();
-        email = user.getEmail();
-        profilePicture = user.getProfilePicture();
-        sex = user.getSex();
-        birthDate = user.getBirthdate();
+
+    public Page(UserService serviceUser, FriendshipService serviceFriendship, FriendRequestService serviceFriendRequest, MessageService serviceMessage, ChatService chatService, EvenimentService evenimentService){
+        this.serviceUser = serviceUser;
+        this.serviceFriendship = serviceFriendship;
+        this.serviceFriendRequest = serviceFriendRequest;
+        this.serviceMessage = serviceMessage;
+        this.chatService = chatService;
+        this.evenimentService = evenimentService;
     }
 
-    public SuperServiceUser getSuperServiceUser() {
-        return superServiceUser;
+    public ChatService getChatService() {
+        return chatService;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public EvenimentService getEvenimentService() {
+        return evenimentService;
     }
 
-    public String getLastName() {
-        return lastName;
+    public MessageService getServiceMessage() {
+        return serviceMessage;
     }
 
-    public String getEmail() {
-        return email;
+    public void setIdUser(Long idUser) throws CredentialException {
+        try {
+            serviceUser.findOne(idUser);
+        } catch (ServiceException e) {
+            throw new CredentialException("User with the given id does not exist");
+        }
+        this.idUser = idUser;
     }
 
-    public String getProfilePicture() {
-        return profilePicture;
+    public Long getIdUser(){
+        return idUser;
     }
 
-    public Sex getSex() {
-        return sex;
+    public void acceptFriendRequest(Long idSender) throws ValidationException, ServiceException, RepositoryException {
+        serviceFriendRequest.updateFriendRequest(idSender, this.idUser, "approved");
+        User first = serviceUser.findOne(idSender);
+        User second = serviceUser.findOne(idUser);
+        serviceFriendship.save(first, second);
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
+    public List<Chat> getAllChats() {
+        return chatService.findAll(idUser);
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void declineFriendRequest(Long idSender) throws ValidationException, ServiceException {
+        serviceFriendRequest.updateFriendRequest(idSender, idUser, "rejected");
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void deleteSentFriendRequest(Long idReceiver) throws ServiceException {
+        serviceFriendRequest.deleteFriendRequest(idUser, idReceiver);
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public List<FriendDTO> getFriends() throws ServiceException {
+        User user = serviceUser.findOne(idUser);
+        return serviceFriendship.getFriendsDTO(user);
     }
 
-    public void setProfilePicture(String profilePicture) {
-        this.profilePicture = profilePicture;
+    public List<Friend> getListOfFriends() throws ServiceException {
+        User user = serviceUser.findOne(idUser);
+        return serviceFriendship.getFriends(user);
     }
 
-    public void setSex(Sex sex) {
-        this.sex = sex;
+    public List<User> getAllNonFriends() {
+        Predicate<FriendRequest> predicate = x -> x.getIdReceivingUser().equals(idUser);
+        Predicate<FriendRequest> predicate1 = x -> x.getIdSendingUser().equals(idUser);
+        List<User> userList = StreamSupport.stream(serviceUser.findAll().spliterator(), false).toList();
+        List<User> requests = StreamSupport.stream(serviceFriendRequest.findAll().spliterator(), false).toList()
+                .stream()
+                .filter(predicate.or(predicate1)).
+                map(friendRequest -> {
+                    try {
+                        if (friendRequest.getIdSendingUser().equals(idUser))
+                            return serviceUser.findOne(friendRequest.getIdReceivingUser());
+                        else if (friendRequest.getIdReceivingUser().equals(idUser))
+                            return serviceUser.findOne(friendRequest.getIdSendingUser());
+                    } catch (ServiceException ignored) {
+                    }
+                    return null;
+                }).toList();
+        Predicate<User> predicate2 = x -> !requests.contains(x);
+        Predicate<User> predicate3 = x -> !x.getId().equals(idUser);
+        return userList.stream()
+                .filter(predicate2.and(predicate3)).toList();
     }
 
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+    public void sendFriendRequest(Long idReceiver) throws ValidationException, ServiceException, RepositoryException {
+        serviceFriendRequest.sendFriendRequest(idUser, idReceiver);
+        //notifyObservers(new UserChangedEvent(ChangeEventType.UPDATE, null));
     }
 
-    public void setSuperServiceUser(SuperServiceUser superServiceUser) {
-        this.superServiceUser = superServiceUser;
-    }*/
+    public Iterable<User> getAllPendingForReceiver() {
+        Iterable<FriendRequest> requests = serviceFriendRequest.findAll();
+        return StreamSupport.stream(requests.spliterator(), false).
+                filter(friendRequest -> friendRequest.getIdReceivingUser().equals(idUser)).
+                filter(friendRequest -> friendRequest.getStatus().equals("pending")).
+                map(friendRequest -> {
+                    try {
+                        return serviceUser.findOne(friendRequest.getIdSendingUser());
+                    } catch (ServiceException ignored) {}
+                    return null;
+                }).
+                collect(Collectors.toList());
+    }
+
+    public Iterable<RequestDTO> getAllPendingForReceiverDTO() {
+        Iterable<FriendRequest> requests = serviceFriendRequest.findAll();
+        return StreamSupport.stream(requests.spliterator(), false).
+                filter(friendRequest -> friendRequest.getIdReceivingUser().equals(idUser)).
+                filter(friendRequest -> friendRequest.getStatus().equals("pending")).
+                map(friendRequest -> {
+                    try {
+                        User user = serviceUser.findOne(friendRequest.getIdSendingUser());
+                        RequestDTO requestDTO = new RequestDTO(user.getFirstName(), user.getLastName(), friendRequest.getStatus(), friendRequest.getDate(), user.getProfilePicture());
+                        requestDTO.setIdUser(user.getId());
+                        return requestDTO;
+                    } catch (ServiceException ignored) {}
+                    return null;
+                }).
+                collect(Collectors.toList());
+    }
+
+    public Iterable<RequestDTO> getAllRejectedAndApprovedForReceiverDTO() {
+        Iterable<FriendRequest> requests = serviceFriendRequest.findAll();
+        return StreamSupport.stream(requests.spliterator(), false).
+                filter(friendRequest -> friendRequest.getIdReceivingUser().equals(idUser)).
+                filter(friendRequest -> {
+                    if(friendRequest.getStatus().equals("approved") || friendRequest.getStatus().equals("rejected"))
+                        return true;
+                    return false;
+                }).
+                map(friendRequest -> {
+                    try {
+                        User user = serviceUser.findOne(friendRequest.getIdSendingUser());
+                        return new RequestDTO(user.getFirstName(), user.getLastName(), friendRequest.getStatus(), friendRequest.getDate(), user.getProfilePicture());
+                    } catch (ServiceException ignored) {}
+                    return null;
+                }).
+                collect(Collectors.toList());
+    }
+
+    public boolean wantsToBeFriend(User user){
+        List<User> friends  = StreamSupport.stream(getAllPendingForReceiver().spliterator(), false).toList();
+        if(friends.contains(user))
+            return true;
+        return false;
+    }
+
+    public Iterable<User> getAllPendingForSender(){
+        Iterable<FriendRequest> requests = serviceFriendRequest.findAll();
+        return StreamSupport.stream(requests.spliterator(), false).
+                filter(friendRequest -> friendRequest.getIdSendingUser().equals(idUser)).
+                filter(friendRequest -> friendRequest.getStatus().equals("pending")).
+                map(friendRequest -> {
+                    try {
+                        return serviceUser.findOne(friendRequest.getIdReceivingUser());
+                    } catch (ServiceException ignored) {}
+                    return null;
+                }).
+                collect(Collectors.toList());
+    }
+
+    public void deleteFriendship(Long idFriend) throws ServiceException {
+        serviceFriendship.delete(idUser, idFriend);
+        try {
+            serviceFriendRequest.deleteFriendRequest(idUser, idFriend);
+        }catch (ServiceException ignored){}
+        try {
+            serviceFriendRequest.deleteFriendRequest(idFriend, idUser);
+        }catch (ServiceException ignored){}
+    }
+
+    public void updateInfos(String firstName, String lastName, String gender, LocalDate birthdate) throws ValidationException, ServiceException, RepositoryException {
+        serviceUser.update(idUser, firstName, lastName, gender, birthdate);
+    }
+
+    public User getUser() throws ServiceException {
+        return serviceUser.findOne(idUser);
+    }
+
+    public Iterable<User> getUsers(){
+        return serviceUser.findAll();
+    }
+
+    public void sendMessage(Long idGroup, String text, Long reply) throws ValidationException, RepositoryException {
+        serviceMessage.send(idUser, idGroup, text, reply);
+    }
+
+    public void replyMessage(Long idMessage, String text) throws ValidationException, ServiceException, RepositoryException {
+        serviceMessage.reply(idMessage, idUser, text);
+    }
+
+    public List<Message> getChatMessages(Long chatId) {
+        return serviceMessage.getGroupChat(chatId);
+    }
+
+    public Chat saveChat(Chat chat) {
+        return chatService.save(chat);
+    }
+
+    public Chat deleteChat(Chat chat) {
+        return chatService.delete(chat);
+    }
+
+    public void setProfilePicture(String path) throws ServiceException, ValidationException {
+        User user = serviceUser.findOne(idUser);
+        serviceUser.updateProfilePicture(user, path);
+    }
+
+    public FriendshipService getServiceFriendship(){
+        return serviceFriendship;
+    }
+
+    public FriendRequestService getServiceFriendRequest(){
+        return serviceFriendRequest;
+    }
+
+    public UserService getServiceUser(){
+        return serviceUser;
+    }
+
+    public List<User> searchByName(String name){
+        name = name.toLowerCase();
+        Iterable<User> users = getUsers();
+        String finalName = name;
+        List<User> usersWithName = StreamSupport.stream(users.spliterator(), false).
+                filter(user -> user.getFirstName().toLowerCase().startsWith(finalName) ||
+                        user.getLastName().toLowerCase().startsWith(finalName)).collect(Collectors.toList());
+
+        return usersWithName;
+    }
+
+    public boolean areFriends(Long idFriend){
+        if(serviceFriendship.findOne(idUser, idFriend) != null)
+            return true;
+        return false;
+    }
+
+    public boolean requestExists(Long idReceiver){
+        if(serviceFriendRequest.findOne(idUser, idReceiver) != null)
+            return true;
+        return false;
+    }
+
+    public boolean reverseRequestExists(Long idSender){
+        if(serviceFriendRequest.findOne(idSender, idUser) != null)
+            return true;
+        return false;
+    }
+
+    public List<Eveniment> getEvents() {
+        return evenimentService.findAll();
+    }
+
+    public void saveEvent(Eveniment eveniment) {
+        evenimentService.save(eveniment, getIdUser());
+    }
+
+    public void sendNotifications() {
+        List<EvenimentNotification> evenimentNotificationList = evenimentService.findAllNotifications(idUser);
+        for(EvenimentNotification evenimentNotification : evenimentNotificationList) {
+            Eveniment eveniment = evenimentService.findOneEveniment(evenimentNotification.getEveniment_id());
+            long daysBetween = Period.between(LocalDate.now(), eveniment.getDate()).getDays();
+            System.out.println(evenimentNotification.getNotification() + " -- " + evenimentNotification.getStatus() + " -- " + daysBetween);
+            if(daysBetween == 1 && evenimentNotification.getNotification().equals("on") && evenimentNotification.getStatus().equals("notsent")) {
+                evenimentNotification.setStatus("sent");
+                evenimentService.updateEventNotification(evenimentNotification);
+            }
+        }
+    }
+
+    public void readNotifications() {
+        List<EvenimentNotification> evenimentNotificationList = evenimentService.findAllNotifications(idUser);
+        for(EvenimentNotification evenimentNotification : evenimentNotificationList) {
+            Eveniment eveniment = evenimentService.findOneEveniment(evenimentNotification.getEveniment_id());
+            if(evenimentNotification.getNotification().equals("on") && evenimentNotification.getStatus().equals("sent")) {
+                evenimentNotification.setStatus("seen");
+                evenimentService.updateEventNotification(evenimentNotification);
+            }
+        }
+    }
+
+    public List<EvenimentNotification> populateNotificationList() {
+        return evenimentService.findAllNotifications(idUser)
+                .stream()
+                .filter(x -> x.getStatus().equals("sent"))
+                .toList();
+    }
+
+    public Eveniment findOneEveniment(Long id) {
+        return evenimentService.findOneEveniment(id);
+    }
+
+    public List<EvenimentNotification> getAllNotifications() {
+        return evenimentService.findAllNotifications(idUser);
+    }
+
+    public void subscribeToEvent(EvenimentNotification evenimentNotification) {
+        evenimentService.saveEventNotification(evenimentNotification);
+    }
+
+    public void unsubscribeFromEvent(EvenimentNotification evenimentNotification) {
+        evenimentService.deleteEventNotification(evenimentNotification);
+    }
+
+    public void updateEventNotification(EvenimentNotification evenimentNotification) {
+        evenimentService.updateEventNotification(evenimentNotification);
+    }
+
+    public EvenimentNotification findOneSubscribe(EvenimentNotification evenimentNotification) {
+        return evenimentService.findOneEvenimentNotification(evenimentNotification);
+    }
+
+    public void deletePastEvents() {
+        evenimentService.deletePastEvents();
+    }
 }

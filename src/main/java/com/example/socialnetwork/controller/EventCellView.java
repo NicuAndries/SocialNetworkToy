@@ -1,24 +1,17 @@
 package com.example.socialnetwork.controller;
 
-import com.example.socialnetwork.domain.Chat;
 import com.example.socialnetwork.domain.Eveniment;
 import com.example.socialnetwork.domain.EvenimentNotification;
-import com.example.socialnetwork.exceptions.RepositoryException;
-import com.example.socialnetwork.exceptions.ServiceException;
-import com.example.socialnetwork.exceptions.ValidationException;
-import com.example.socialnetwork.service.EvenimentService;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
-import java.util.List;
 
 public class EventCellView extends ListCell<Eveniment> {
     public Label eventName;
@@ -26,11 +19,11 @@ public class EventCellView extends ListCell<Eveniment> {
     public Button goingButton;
     public Button notificationButton;
     public AnchorPane anchorPane;
-    private Service service;
+    private Page page;
     public ImageView eventImage;
 
-    public EventCellView(Service service) {
-        this.service = service;
+    public EventCellView(Page page) {
+        this.page = page;
         try {
             FXMLLoader modelLoader = new FXMLLoader();
             modelLoader.setController(this);
@@ -51,7 +44,7 @@ public class EventCellView extends ListCell<Eveniment> {
         } else {
             eventName.setText(chat.getName());
             eventDate.setText(String.valueOf(chat.getDate()));
-            EvenimentNotification eventNotification = service.findOneSubscribe(new EvenimentNotification(getItem().getId(), service.getIdUser(), "", ""));
+            EvenimentNotification eventNotification = page.findOneSubscribe(new EvenimentNotification(getItem().getId(), page.getIdUser(), "", ""));
             if (eventNotification != null) {
                 goingButton.setStyle("-fx-background-color: #FFA500");
                 if (eventNotification.getNotification().equals("on"))
@@ -64,30 +57,30 @@ public class EventCellView extends ListCell<Eveniment> {
             }
 
             goingButton.setOnAction(event -> {
-                EvenimentNotification eveniment = new EvenimentNotification(getItem().getId(), service.getIdUser(), "off", "notsent");
-                EvenimentNotification evenimentNotification = service.findOneSubscribe(eveniment);
+                EvenimentNotification eveniment = new EvenimentNotification(getItem().getId(), page.getIdUser(), "off", "notsent");
+                EvenimentNotification evenimentNotification = page.findOneSubscribe(eveniment);
                 if (evenimentNotification == null) {
                     goingButton.setStyle("-fx-background-color: #FFA500");
-                    service.subscribeToEvent(eveniment);
+                    page.subscribeToEvent(eveniment);
                 }
                 else {
-                    service.unsubscribeFromEvent(eveniment);
+                    page.unsubscribeFromEvent(eveniment);
                     goingButton.setStyle(null);
                 }
             });
 
             notificationButton.setOnAction(event -> {
-                EvenimentNotification eveniment = new EvenimentNotification(getItem().getId(), service.getIdUser(), "", "");
-                EvenimentNotification evenimentNotification = service.findOneSubscribe(eveniment);
+                EvenimentNotification eveniment = new EvenimentNotification(getItem().getId(), page.getIdUser(), "", "");
+                EvenimentNotification evenimentNotification = page.findOneSubscribe(eveniment);
                 if (evenimentNotification == null)
                     MessageAlert.showErrorMessage(null, "You must subscribe to event!");
                 else if (evenimentNotification.getNotification().equals("off")) {
                     evenimentNotification.setNotification("on");
-                    service.updateEventNotification(evenimentNotification);
+                    page.updateEventNotification(evenimentNotification);
                     notificationButton.setStyle("-fx-background-color: #FFA500");
                 } else if (evenimentNotification.getNotification().equals("on")) {
                     evenimentNotification.setNotification("off");
-                    service.updateEventNotification(evenimentNotification);
+                    page.updateEventNotification(evenimentNotification);
                     notificationButton.setStyle(null);
                 }
             });

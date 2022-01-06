@@ -2,7 +2,7 @@ package com.example.socialnetwork.controller;
 
 import com.example.socialnetwork.dto.RequestDTO;
 import com.example.socialnetwork.service.FriendshipService;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import com.example.socialnetwork.utils.events.RequestChangedEvent;
 import com.example.socialnetwork.utils.observer.Observer;
 import javafx.collections.FXCollections;
@@ -20,23 +20,23 @@ public class FriendRequestsController implements Observer<RequestChangedEvent> {
     public Button backToFindFriendsButton;
     private ObservableList<RequestDTO> friendRequestsObservableList = FXCollections.observableArrayList();
     public Pane friendRequestsPane;
-    private Service service;
+    private Page page;
     private FriendshipService friendshipService;
 
     public void initialize() {
         friendRequestsListView.setItems(friendRequestsObservableList);
-        friendRequestsListView.setCellFactory(param -> new FriendRequestsCellView(service));
+        friendRequestsListView.setCellFactory(param -> new FriendRequestsCellView(page));
     }
 
     public void populate() {
-        List<RequestDTO> friendRequests = StreamSupport.stream(service.getAllPendingForReceiverDTO().spliterator(), false).toList();
+        List<RequestDTO> friendRequests = StreamSupport.stream(page.getAllPendingForReceiverDTO().spliterator(), false).toList();
         friendRequestsObservableList.setAll(friendRequests);
     }
 
-    public void setService(Service service, FriendshipService friendshipService) {
-        this.service = service;
+    public void setService(Page page, FriendshipService friendshipService) {
+        this.page = page;
         this.friendshipService = friendshipService;
-        service.getServiceFriendRequest().addObserver(this);
+        page.getServiceFriendRequest().addObserver(this);
         populate();
 
     }

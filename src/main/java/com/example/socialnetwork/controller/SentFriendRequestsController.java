@@ -1,7 +1,7 @@
 package com.example.socialnetwork.controller;
 
 import com.example.socialnetwork.domain.User;
-import com.example.socialnetwork.service.Service;
+import com.example.socialnetwork.service.Page;
 import com.example.socialnetwork.utils.events.RequestChangedEvent;
 import com.example.socialnetwork.utils.observer.Observer;
 import javafx.collections.FXCollections;
@@ -19,21 +19,21 @@ public class SentFriendRequestsController implements Observer<RequestChangedEven
     public Pane sentFriendRequestsPane;
     public Button backToFindFriendsButton;
     private ObservableList<User> sentFriendRequestsObservableList = FXCollections.observableArrayList();
-    private Service service;
+    private Page page;
 
     public void initialize() {
         sentFriendRequestsListView.setItems(sentFriendRequestsObservableList);
-        sentFriendRequestsListView.setCellFactory(param -> new SentFriendRequestsCellView(service));
+        sentFriendRequestsListView.setCellFactory(param -> new SentFriendRequestsCellView(page));
     }
 
     public void populate() {
-        List<User> friendRequests = StreamSupport.stream(service.getAllPendingForSender().spliterator(), false).toList();
+        List<User> friendRequests = StreamSupport.stream(page.getAllPendingForSender().spliterator(), false).toList();
         sentFriendRequestsObservableList.setAll(friendRequests);
     }
 
-    public void setService(Service service) {
-        this.service = service;
-        service.getServiceFriendRequest().addObserver(this);
+    public void setService(Page page) {
+        this.page = page;
+        page.getServiceFriendRequest().addObserver(this);
         populate();
     }
 
