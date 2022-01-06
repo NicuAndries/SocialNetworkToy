@@ -1,8 +1,7 @@
 package com.example.socialnetwork.repository.paging;
-public class PageableImplementation implements Pageable {
 
-    private int pageNumber;
-    private int pageSize;
+public class PageableImplementation implements Pageable{
+   private int pageNumber, pageSize;
 
     public PageableImplementation(int pageNumber, int pageSize) {
         this.pageNumber = pageNumber;
@@ -11,11 +10,11 @@ public class PageableImplementation implements Pageable {
 
     @Override
     public int getPageNumber() {
-        return this.pageNumber;
+        return pageNumber;
     }
 
     @Override
     public int getPageSize() {
-        return this.pageSize;
+        return pageSize;
     }
 }

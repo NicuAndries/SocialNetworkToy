@@ -1,4 +1,5 @@
 package com.example.socialnetwork.repository.paging;
+
 import java.util.stream.Stream;
 
 public interface Page<E> {
@@ -7,6 +8,4 @@ public interface Page<E> {
     Pageable nextPageable();
 
     Stream<E> getContent();
-
-
 }
