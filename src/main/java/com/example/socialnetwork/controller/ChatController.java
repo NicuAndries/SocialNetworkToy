@@ -161,5 +161,18 @@ public class ChatController implements Observer<MessageChangedEvent> {
     }
 
     public void onExportConversationButton(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("messagesDatePickerWindow.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load());
+            MessageReportGeneratorController messageReportGeneratorController = fxmlLoader.getController();
+            messageReportGeneratorController.setPage(page, chatId);
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
+        }
+        stage.setTitle("Date picker!");
+        stage.setScene(scene);
+        stage.show();
     }
 }

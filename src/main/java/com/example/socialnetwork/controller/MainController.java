@@ -9,6 +9,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,6 +29,7 @@ public class MainController {
     public Label profileNameLabel;
     public Pane messagePane;
     public ImageView profileImage;
+    public Button exportButton;
     private Page page;
     public Button friendsButton;
     public Button findFriendsButton;
@@ -126,5 +128,21 @@ public class MainController {
 
     public void onProfileButton(ActionEvent actionEvent) {
         profilePane.toFront();
+    }
+
+    public void onExportButton(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("activitiesDatePickerWindow.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load());
+            ActivitiesReportGeneratorController activitiesReportGeneratorController = fxmlLoader.getController();
+            activitiesReportGeneratorController.setPage(page);
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
+        }
+        stage.setTitle("Date picker!");
+        stage.setScene(scene);
+        stage.show();
     }
 }

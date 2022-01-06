@@ -277,8 +277,13 @@ public class Page {
 
     }
 
-    public List<FriendDTO> getRaportAllNewFriends(LocalDateTime begin, LocalDateTime end) throws ServiceException {
-       return getFriends().stream().filter(friendship -> friendship.getDate().isAfter(begin.toLocalDate()) && friendship.getDate().isBefore(end.toLocalDate())).collect(Collectors.toList());
+    public List<FriendDTO> getRaportAllNewFriends(LocalDate begin, LocalDate end) {
+        try {
+            return getFriends().stream().filter(friendship -> friendship.getDate().isAfter(begin) && friendship.getDate().isBefore(end)).collect(Collectors.toList());
+        } catch (ServiceException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return null;
     }
 
     public Chat saveChat(Chat chat) {

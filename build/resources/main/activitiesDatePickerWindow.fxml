@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="201.0" prefWidth="256.0" style="-fx-background-color: #242131;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.socialnetwork.controller.ActivitiesReportGeneratorController">
+    <children>
+        <DatePicker fx:id="startDatePicker" layoutX="40.0" layoutY="42.0" promptText="Enter start date.." />
+        <DatePicker fx:id="endDatePicker" layoutX="40.0" layoutY="101.0" promptText="Enter final date.." />
+        <Label layoutX="40.0" layoutY="22.0" text="Start date:" textFill="WHITE">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="40.0" layoutY="81.0" text="Final date:" textFill="WHITE">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Button fx:id="generatePDFButton" layoutX="76.0" layoutY="151.0" mnemonicParsing="false" onAction="#onGeneratePDFButton" style="-fx-background-color: #0000ff;" text="Generate PDF" textFill="WHITE">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Button>
+    </children>
+</AnchorPane>

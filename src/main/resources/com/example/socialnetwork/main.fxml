@@ -34,6 +34,11 @@
                         <Font name="Verdana Bold" size="24.0" />
                      </font>
                   </Label>
+                  <Button fx:id="exportButton" layoutX="585.0" layoutY="603.0" mnemonicParsing="false" onAction="#onExportButton" style="-fx-background-color: #0000ff;" text="Export" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
                </children></Pane>
             </children>
         </StackPane>
