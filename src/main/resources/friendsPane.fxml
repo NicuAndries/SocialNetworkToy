@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="642.0" prefWidth="668.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.socialnetwork.controller.FriendsController">
+    <children>
+        <Label layoutX="7.0" layoutY="-1.0" prefHeight="30.0" prefWidth="137.0" text="Friends">
+            <font>
+                <Font name="Arial Bold" size="24.0" />
+            </font>
+        </Label>
+        <TextField layoutX="508.0" layoutY="11.0" promptText="Search a friend.." />
+        <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="484.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/imagine4.png" />
+         </image></ImageView>
+        <ListView fx:id="friendListView" layoutY="57.0" prefHeight="585.0" prefWidth="668.0" />
+      <Line endX="100.0" layoutX="99.0" layoutY="29.0" startX="-100.0" stroke="#1d232a" />
+      <Line endX="569.0000610351562" endY="-7.62939453125E-6" layoutX="99.0" layoutY="55.0" startX="-100.0" stroke="#1d232a" strokeWidth="6.0" />
+    </children>
+</Pane>

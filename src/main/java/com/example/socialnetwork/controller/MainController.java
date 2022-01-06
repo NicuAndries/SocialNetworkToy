@@ -1,0 +1,132 @@
+package com.example.socialnetwork.controller;
+
+import com.example.socialnetwork.domain.Chat;
+import com.example.socialnetwork.domain.User;
+import com.example.socialnetwork.exceptions.ServiceException;
+import com.example.socialnetwork.service.FriendRequestService;
+import com.example.socialnetwork.service.FriendshipService;
+import com.example.socialnetwork.service.Service;
+import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import javax.security.auth.login.CredentialException;
+import java.io.IOException;
+
+
+public class MainController {
+    public Button messageButton;
+    public Button eventsButton;
+    public Button profileButton;
+    public Pane profilePane;
+    public Label profileNameLabel;
+    public Pane messagePane;
+    public ImageView profileImage;
+    private Service service;
+    public Button friendsButton;
+    public Button findFriendsButton;
+    public Pane findFriendsPane;
+    public Pane friendsPane;
+    public Pane eventPane;
+    public StackPane stackPane;
+    private FriendshipService friendshipService;
+    private FriendRequestService friendRequestService;
+    private FriendsController friendsController;
+    private FindFriendsController findFriendsController;
+    private ChatController messageController;
+    private EventController eventController;
+    private Stage loginStage;
+
+    private FilteredList<User> filteredList;
+
+    public void setService(Service service, FriendRequestService friendRequestService, Long user_id) {
+        this.friendRequestService = friendRequestService;
+        this.service = service;
+        try {
+            this.service.setIdUser(user_id);
+        } catch (CredentialException exception) {
+            System.out.println(exception.getMessage());
+        }
+        friendsController.setService(service, service.getServiceFriendship());
+        findFriendsController.setService(service, service.getServiceFriendship());
+        messageController.setService(service);
+        eventController.setService(service);
+        profilePane.toFront();
+        setProfileInformation();
+    }
+
+    public void setStage(Window stage){
+        loginStage = (Stage) stage;
+    }
+
+    @FXML
+    public void initialize() {
+        FXMLLoader friendsLoader = null;
+        FXMLLoader findFriendsLoader = null;
+        FXMLLoader messageLoader = null;
+        FXMLLoader eventsLoader = null;
+        try {
+            friendsLoader = new FXMLLoader(getClass().getClassLoader().getResource("friendsPane.fxml"));
+            friendsPane.getChildren().add(friendsLoader.load());
+
+            findFriendsLoader = new FXMLLoader(getClass().getClassLoader().getResource("findFriendsPane.fxml"));
+            findFriendsPane.getChildren().add(findFriendsLoader.load());
+
+            messageLoader = new FXMLLoader(getClass().getClassLoader().getResource("chatPane.fxml"));
+            messagePane.getChildren().add(messageLoader.load());
+
+            eventsLoader = new FXMLLoader(getClass().getClassLoader().getResource("eventPane.fxml"));
+            eventPane.getChildren().add(eventsLoader.load());
+
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
+        }
+        friendsController = friendsLoader.getController();
+        findFriendsController = findFriendsLoader.getController();
+        messageController = messageLoader.getController();
+        eventController = eventsLoader.getController();
+    }
+
+    public void setProfileInformation() {
+        try {
+            profileNameLabel.setText(service.getUser().getFirstName() + " " + service.getUser().getLastName());
+            profileImage.setImage(new Image(service.getUser().getProfilePicture()));
+        } catch (ServiceException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    public void onFriendsButton(ActionEvent actionEvent) {
+        friendsPane.toFront();
+        findFriendsPane.toBack();
+        messagePane.toBack();
+    }
+
+    public void onFindFriendsButton(ActionEvent actionEvent) {
+        findFriendsPane.toFront();
+        friendsPane.toBack();
+        messagePane.toBack();
+    }
+
+    public void onMessageButton(ActionEvent actionEvent) {
+        messagePane.toFront();
+        friendsPane.toBack();
+        findFriendsPane.toBack();
+    }
+
+    public void onEventsButton(ActionEvent actionEvent) {
+        eventPane.toFront();
+    }
+
+    public void onProfileButton(ActionEvent actionEvent) {
+        profilePane.toFront();
+    }
+}

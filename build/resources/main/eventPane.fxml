@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.socialnetwork.controller.EventController">
+   <children>
+      <Pane fx:id="notificationPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" />
+      <Pane fx:id="eventPane" prefHeight="642.0" prefWidth="653.0" style="-fx-background-color: white;">
+          <children>
+              <AnchorPane prefHeight="66.0" prefWidth="654.0" style="-fx-background-color: #242131;">
+                  <children>
+                      <Label layoutX="28.0" layoutY="17.0" prefHeight="32.0" prefWidth="231.0" text="Discover Events" textFill="WHITE">
+                          <font>
+                              <Font name="Verdana" size="25.0" />
+                          </font>
+                      </Label>
+                  <Button fx:id="createEvent" layoutX="588.0" layoutY="21.0" mnemonicParsing="false" onAction="#onCreateEvent" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/+.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="checkNotificationButton" layoutX="533.0" layoutY="16.0" mnemonicParsing="false" onAction="#onCheckNotificationButton" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/bell-512.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Circle fx:id="notificationCircle" fill="WHITE" layoutX="571.0" layoutY="17.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                  <Label fx:id="numberOfNotifications" layoutX="568.0" layoutY="8.0" prefHeight="18.0" prefWidth="7.0" text="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  </children>
+              </AnchorPane>
+              <ListView fx:id="eventsListView" layoutX="106.0" layoutY="66.0" prefHeight="578.0" prefWidth="442.0" />
+          </children>
+      </Pane>
+   </children>
+</StackPane>

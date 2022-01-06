@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="443.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.socialnetwork.controller.ChatCreatorController">
+   <children>
+      <Line endX="21.800018310546875" endY="358.4000244140625" layoutX="181.0" layoutY="86.0" startX="21.79998779296875" startY="-86.0" stroke="#363d45" strokeWidth="6.0" />
+      <ListView fx:id="friendListView" layoutY="38.0" prefHeight="406.0" prefWidth="200.0" />
+      <Line endX="14.799957275390625" endY="-38.00000762939453" layoutX="188.0" layoutY="73.0" startX="-191.0" startY="-38.00000762939453" stroke="#363d45" strokeWidth="6.0" />
+      <Label layoutX="217.0" layoutY="23.0" text="To:" />
+      <Label layoutX="217.0" layoutY="64.0" text="Chat name:" />
+      <Label layoutX="217.0" layoutY="104.0" prefHeight="18.0" prefWidth="60.0" text="Message:" />
+      <TextField fx:id="chatNameTextField" layoutX="293.0" layoutY="59.0" prefHeight="26.0" prefWidth="289.0" />
+      <TextArea fx:id="createChatMessageTextField" layoutX="293.0" layoutY="102.0" prefHeight="286.0" prefWidth="290.0" />
+      <TextField fx:id="toTextField" layoutX="293.0" layoutY="18.0" prefHeight="26.0" prefWidth="289.0" />
+      <Label layoutX="5.0" layoutY="3.0" prefHeight="18.0" prefWidth="131.0" text="Friends">
+         <font>
+            <Font name="Verdana Bold" size="22.0" />
+         </font>
+      </Label>
+      <Button fx:id="createChatButton" layoutX="457.0" layoutY="410.0" mnemonicParsing="false" onAction="#onCreateChatButton" text="Send" />
+      <Button fx:id="cancelButton" layoutX="379.0" layoutY="410.0" mnemonicParsing="false" onAction="#onCancelButton" text="Cancel" />
+   </children>
+</AnchorPane>

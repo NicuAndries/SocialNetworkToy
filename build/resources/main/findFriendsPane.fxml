@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.socialnetwork.controller.FindFriendsController">
+   <children>
+      <Pane fx:id="friendRequestsPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" />
+      <Pane fx:id="historyRequestsPane" prefHeight="642.0" prefWidth="668.0" style="-fx-background-color: white;" />
+      <Pane fx:id="sentFriendRequestsPane" prefHeight="200.0" prefWidth="200.0" />
+      <Pane fx:id="findFriendsPane" prefHeight="642.0" prefWidth="668.0" style="-fx-background-color: white;">
+          <children>
+              <Label layoutX="7.0" layoutY="4.0" prefHeight="30.0" prefWidth="184.0" text="Find Friends">
+                  <font>
+                      <Font name="Arial Bold" size="25.0" />
+                  </font>
+              </Label>
+              <ListView fx:id="findFriendListView" layoutY="91.0" prefHeight="552.0" prefWidth="668.0" />
+              <Line endX="342.0" layoutX="326.0" layoutY="91.0" startX="-323.0" startY="1.0" stroke="#1d232a" strokeWidth="6.0" />
+              <Line endX="100.0" layoutX="100.0" layoutY="35.0" startX="-100.0" stroke="#1d232a" />
+              <Label layoutX="14.0" layoutY="42.0" prefHeight="20.0" prefWidth="201.0" text="People You May Know">
+                  <font>
+                      <Font name="Arial" size="17.0" />
+                  </font>
+              </Label>
+              <Hyperlink fx:id="viewHistoryRequests" layoutX="16.0" layoutY="62.0" onAction="#onViewHistoryRequests" text="View history requests" />
+              <TextField fx:id="searchFriendsTextField" layoutX="484.0" layoutY="58.0" prefHeight="25.0" prefWidth="157.0" promptText="Search" />
+              <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="462.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/imagine4.png" />
+               </image>
+            </ImageView>
+            <Hyperlink fx:id="viewReceivedRequests" layoutX="153.0" layoutY="62.0" onAction="#onViewReceivedRequests" text="View friend requests" />
+            <Hyperlink fx:id="viewSentRequests" layoutX="285.0" layoutY="62.0" onAction="#onViewSentRequests" text="View sent requests" />
+          </children>
+      </Pane>
+   </children>
+</StackPane>

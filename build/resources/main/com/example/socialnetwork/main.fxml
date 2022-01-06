@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="642.0" prefWidth="780.0" style="-fx-background-color: #1D232A;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.socialnetwork.controller.MainController">
+    <children>
+        <StackPane fx:id="stackPane" layoutX="128.0" prefHeight="642.0" prefWidth="651.0" style="-fx-background-color: black;">
+            <children>
+                <Pane fx:id="friendsPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" />
+                <Pane fx:id="findFriendsPane" prefHeight="642.0" prefWidth="614.0" style="-fx-background-color: white;" />
+            <Pane fx:id="profilePane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
+               <children>
+                  <ImageView fitHeight="254.0" fitWidth="651.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/profileBackground.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="profileImage" fitHeight="236.0" fitWidth="218.0" layoutX="231.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/imagine3.jpg" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="profileNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="178.0" layoutY="359.0" prefHeight="17.0" prefWidth="294.0" text="Andries Nicolae">
+                     <font>
+                        <Font name="Verdana Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <Pane fx:id="messagePane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" />
+            <Pane fx:id="eventPane" prefHeight="200.0" prefWidth="200.0" />
+            </children>
+        </StackPane>
+        <Button fx:id="findFriendsButton" alignment="CENTER" layoutX="4.0" layoutY="335.0" mnemonicParsing="false" onAction="#onFindFriendsButton" style="-fx-background-color: transparent;" text="Find Friends" textFill="WHITE">
+            <font>
+                <Font name="Verdana Bold" size="14.0" />
+            </font>
+        </Button>
+          <ImageView fitHeight="65.0" fitWidth="65.0" layoutX="30.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/profileButtonImage1.png" />
+         </image>
+      </ImageView>
+          <ImageView fitHeight="65.0" fitWidth="65.0" layoutX="27.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/grup.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="65.0" fitWidth="65.0" layoutX="29.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/prieteni.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="65.0" fitWidth="65.0" layoutX="30.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/message1.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="friendsButton" alignment="CENTER" layoutX="21.0" layoutY="225.0" mnemonicParsing="false" onAction="#onFriendsButton" style="-fx-background-color: transparent;" text="Friends" textFill="WHITE">
+         <font>
+            <Font name="Verdana Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="messageButton" layoutX="13.0" layoutY="441.0" mnemonicParsing="false" onAction="#onMessageButton" style="-fx-background-color: transparent;" text="Messages" textFill="WHITE">
+         <font>
+            <Font name="Verdana Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="profileButton" alignment="CENTER" layoutX="24.0" layoutY="122.0" mnemonicParsing="false" onAction="#onProfileButton" style="-fx-background-color: transparent;" text="Profile" textFill="WHITE">
+         <font>
+            <Font name="Verdana Bold" size="14.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="65.0" fitWidth="65.0" layoutX="29.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/calendar.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="eventsButton" alignment="CENTER" layoutX="24.0" layoutY="547.0" mnemonicParsing="false" onAction="#onEventsButton" style="-fx-background-color: transparent;" text="Events" textFill="WHITE">
+         <font>
+            <Font name="Verdana Bold" size="14.0" />
+         </font>
+      </Button>
+    </children>
+</AnchorPane>
