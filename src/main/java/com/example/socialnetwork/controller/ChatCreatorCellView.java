@@ -44,7 +44,7 @@ public class ChatCreatorCellView extends ListCell<Friend> {
         } else {
             labelName.setText(friend.getFirstName() + " " + friend.getLastName());
             labelBirthdata.setText(String.valueOf(friend.getBirthdate()));
-            Image image = new Image("@../../images/imagine3.jpg");
+            Image image = new Image(friend.getProfilePicture());
             userImage.setImage(image);
             setText(null);
             setGraphic(anchorPane);
