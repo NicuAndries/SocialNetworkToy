@@ -2,6 +2,7 @@ package com.example.socialnetwork.service;
 
 import com.example.socialnetwork.domain.*;
 import com.example.socialnetwork.dto.FriendDTO;
+import com.example.socialnetwork.dto.MessageDTO;
 import com.example.socialnetwork.dto.RequestDTO;
 import com.example.socialnetwork.exceptions.RepositoryException;
 import com.example.socialnetwork.exceptions.ServiceException;
@@ -9,6 +10,7 @@ import com.example.socialnetwork.exceptions.ValidationException;
 
 import javax.security.auth.login.CredentialException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
 import java.util.function.Predicate;
@@ -219,6 +221,64 @@ public class Page {
 
     public List<Message> getChatMessages(Long chatId) {
         return serviceMessage.getGroupChat(chatId);
+    }
+
+    public List<MessageDTO> getChatMessagesFromAPeriod(LocalDateTime startDate, LocalDateTime endDate, Long chatId){
+        Iterable<Message> messages = serviceMessage.findAll();
+        return StreamSupport.stream(messages.spliterator(), false)
+                .filter(message -> message.getTime().isAfter(startDate) && message.getTime().isBefore(endDate) && message.getChatId().equals(chatId))
+                .map(message -> {
+                    try {
+                        Long id = message.getId();
+                        User user = serviceUser.findOne(message.getUserSenderId());
+                        String name = user.getFirstName() + " " + user.getLastName();
+                        LocalDateTime time = message.getTime();
+                        String text = message.getText();
+                        Long replyId = message.getReply();
+                        String replyAt = null;
+                        if(replyId != null)
+                            replyAt = serviceMessage.findOne(message.getReply()).getText();
+                        return new MessageDTO(id, name, time, text, replyAt);
+                    } catch (ServiceException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }).collect(Collectors.toList());
+    }
+
+
+    public boolean isAChatMember(Long id){
+        Chat chat = chatService.findOne(id);
+        return chat.getMembers().contains(idUser);
+    }
+
+    public List<MessageDTO> getRaportAllMessages(LocalDateTime begin, LocalDateTime end){
+        Iterable<Message> messages = serviceMessage.findAll();
+        return StreamSupport.stream(messages.spliterator(), false)
+                .filter(message -> message.getTime().isAfter(begin) && message.getTime().isBefore(end) && isAChatMember(message.getChatId()) && !message.getUserSenderId().equals(idUser))
+                .map(message -> {
+                    try {
+                        Long id = message.getId();
+                        User user = serviceUser.findOne(message.getUserSenderId());
+                        String name = user.getFirstName() + " " + user.getLastName();
+                        LocalDateTime time = message.getTime();
+                        String text = message.getText();
+                        Long replyId = message.getReply();
+                        String replyAt = null;
+                        if(replyId != null)
+                            replyAt = serviceMessage.findOne(message.getReply()).getText();
+
+                        return new MessageDTO(id, name, time, text, replyAt);
+                    } catch (ServiceException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }).collect(Collectors.toList());
+
+    }
+
+    public List<FriendDTO> getRaportAllNewFriends(LocalDateTime begin, LocalDateTime end) throws ServiceException {
+       return getFriends().stream().filter(friendship -> friendship.getDate().isAfter(begin.toLocalDate()) && friendship.getDate().isBefore(end.toLocalDate())).collect(Collectors.toList());
     }
 
     public Chat saveChat(Chat chat) {

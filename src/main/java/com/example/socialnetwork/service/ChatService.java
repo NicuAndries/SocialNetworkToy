@@ -29,6 +29,10 @@ public class ChatService{
         return null;
     }
 
+    public Chat findOne(Long chatId) {
+        return chatRepository.findOne(chatId);
+    }
+
     public Chat delete(Chat chat) {
         return chatRepository.delete(chat.getId());
     }

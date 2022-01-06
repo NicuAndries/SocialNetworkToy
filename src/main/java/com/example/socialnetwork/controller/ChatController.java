@@ -40,6 +40,7 @@ public class ChatController implements Observer<MessageChangedEvent> {
     public AnchorPane toReplyAnchorPane;
     public Label toMessageLabel;
     public Button cancelReplyButton;
+    public Button exportConversationButton;
     private ObservableList<Chat> chatObservableList = FXCollections.observableArrayList();
     private ObservableList<Message> messageObservableList = FXCollections.observableArrayList();
     private Page page;
@@ -157,5 +158,8 @@ public class ChatController implements Observer<MessageChangedEvent> {
     public void onCancelReplyButton(ActionEvent actionEvent) {
         toReplyAnchorPane.toBack();
         replyId = null;
+    }
+
+    public void onExportConversationButton(ActionEvent actionEvent) {
     }
 }
