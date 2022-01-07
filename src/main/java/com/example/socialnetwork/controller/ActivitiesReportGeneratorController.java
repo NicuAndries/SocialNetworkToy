@@ -9,10 +9,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import org.w3c.dom.Document;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class ActivitiesReportGeneratorController {
@@ -25,9 +26,6 @@ public class ActivitiesReportGeneratorController {
         this.page = page;
     }
 
-    public void createSamplePDF(String header[], String body[][]) throws Exception{
-
-    }
 
     public void onGeneratePDFButton(ActionEvent actionEvent) {
         List<MessageDTO> messageDTOList = page.getRaportAllMessages(startDatePicker.getValue().atStartOfDay(), endDatePicker.getValue().atStartOfDay());
@@ -35,11 +33,6 @@ public class ActivitiesReportGeneratorController {
         List<FriendDTO> friendDTOList = page.getRaportAllNewFriends(startDatePicker.getValue(), endDatePicker.getValue());
         friendDTOList.forEach(System.out::println);
         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
-        try {
-            createSamplePDF(new String[]{"col1", "col2"}, new String[][]{{"rw11", "rw12"},{"rw21", "rw22"}});
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
 
