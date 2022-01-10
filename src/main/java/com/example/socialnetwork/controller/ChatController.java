@@ -46,6 +46,7 @@ public class ChatController implements Observer<MessageChangedEvent> {
     private Page page;
     private Long replyId;
     private Long chatId;
+    private Chat chat;
 
     @FXML
     public void initialize() {
@@ -73,6 +74,7 @@ public class ChatController implements Observer<MessageChangedEvent> {
 
         chatListView.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends Chat> observableValue, Chat oldValue, Chat newValue) -> {
             Chat selectedItem = chatListView.getSelectionModel().getSelectedItem();
+            chat = selectedItem;
             if (selectedItem != null) {
                 chatId = selectedItem.getId();
                 if(selectedItem.getMembers().size() == 2 && page.getIdUser().equals(selectedItem.getMembers().get(0))) {
@@ -167,7 +169,7 @@ public class ChatController implements Observer<MessageChangedEvent> {
         try {
             scene = new Scene(fxmlLoader.load());
             MessageReportGeneratorController messageReportGeneratorController = fxmlLoader.getController();
-            messageReportGeneratorController.setPage(page, chatId);
+            messageReportGeneratorController.setPage(page, chat);
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
