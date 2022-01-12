@@ -34,10 +34,58 @@
                         <Font name="Verdana Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="exportButton" layoutX="585.0" layoutY="603.0" mnemonicParsing="false" onAction="#onExportButton" style="-fx-background-color: #0000ff;" text="Export" textFill="WHITE">
+                  <Button fx:id="exportButton" layoutX="446.0" layoutY="598.0" mnemonicParsing="false" onAction="#onExportButton" style="-fx-background-color: #0000ff;" text="Export user activities to PDF" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
+                  </Button>
+                  <Button fx:id="birthdateProfileButton" alignment="BASELINE_LEFT" layoutX="221.0" layoutY="399.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="209.0" style="-fx-background-color: #0000ff;" text="Birthdate: " textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/calendar.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="friendsProfileButton" alignment="BASELINE_LEFT" layoutX="221.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="209.0" style="-fx-background-color: #0000ff;" text="Friends: " textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/prieteni.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="genderProfileButton" alignment="BASELINE_LEFT" layoutX="221.0" layoutY="484.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="209.0" style="-fx-background-color: #0000ff;" text="Gender:" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/profileButtonImage.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="moreInformationButton" alignment="BASELINE_LEFT" layoutX="221.0" layoutY="526.0" mnemonicParsing="false" onAction="#onMoreInformationButton" prefHeight="25.0" prefWidth="209.0" style="-fx-background-color: #0000ff;" text="More Information" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/info.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                </children></Pane>
             </children>

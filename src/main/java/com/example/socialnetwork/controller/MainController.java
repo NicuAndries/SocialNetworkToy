@@ -30,6 +30,10 @@ public class MainController {
     public Pane messagePane;
     public ImageView profileImage;
     public Button exportButton;
+    public Button birthdateProfileButton;
+    public Button friendsProfileButton;
+    public Button genderProfileButton;
+    public Button moreInformationButton;
     private Page page;
     public Button friendsButton;
     public Button findFriendsButton;
@@ -99,6 +103,9 @@ public class MainController {
         try {
             profileNameLabel.setText(page.getUser().getFirstName() + " " + page.getUser().getLastName());
             profileImage.setImage(new Image(page.getUser().getProfilePicture()));
+            birthdateProfileButton.setText("Birthdate: " + page.getUser().getBirthdate());
+            friendsProfileButton.setText("Friends: " + page.getUser().getFriendsList().size());
+            genderProfileButton.setText("Gender: " + page.getUser().getGender());
         } catch (ServiceException exception) {
             System.out.println(exception.getMessage());
         }
@@ -144,5 +151,9 @@ public class MainController {
         stage.setTitle("Date picker!");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void onMoreInformationButton(ActionEvent actionEvent) {
+        MessageAlert.showMessage(null, Alert.AlertType.INFORMATION, "Information", "You don't need to know more!");
     }
 }
