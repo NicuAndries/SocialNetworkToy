@@ -12,32 +12,32 @@ import javax.security.auth.login.CredentialException;
 import java.security.InvalidKeyException;
 
 public class AccountService {
-    Repository<String, Account> repository;
+    Repository<String, Account> accountRepository;
     Security security;
 
-    public AccountService(Repository<String, Account> repository) {
-        this.repository = repository;
+    public AccountService(Repository<String, Account> accountRepository) {
+        this.accountRepository = accountRepository;
         this.security = new Security();
     }
 
     public Long authenticate(String username, String password) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, CredentialException {
-        Account account = repository.findOne(username);
+        Account account = accountRepository.findOne(username);
         if (account == null)
-            throw new CredentialException("The username or password is incorrect");
+            throw new CredentialException("The username or password is incorrect!");
         if (security.checkPassword(password, account.getPassword()))
             return account.getUserId();
-        throw new CredentialException("The username or password is incorrect");
+        throw new CredentialException("The username or password is incorrect!");
     }
 
     public void save(String username, String password, Long userId) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, ValidationException, RepositoryException {
         String pass = security.encryptPassword(password);
         Account account = new Account(username, pass, userId);
-        repository.save(account);
+        accountRepository.save(account);
     }
 
     public void update(String username, String password, Long userId) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, ValidationException {
         String pass = security.encryptPassword(password);
         Account account = new Account(username, pass, userId);
-        repository.update(account);
+        accountRepository.update(account);
     }
 }

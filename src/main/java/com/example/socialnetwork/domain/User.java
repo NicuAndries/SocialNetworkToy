@@ -72,13 +72,9 @@ public class User extends Entity<Long> {
 
     @Override
     public String toString() {
-        return "User{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", gender='" + gender + '\'' +
-                ", birthdate=" + birthdate +
-                ", friendsList=" + friendsList +
-                ", profilePicture='" + profilePicture + '\'' +
-                '}';
+        return  "firstName= '" + firstName + '\'' +
+                ", lastName= '" + lastName + '\'' +
+                ", gender= '" + gender + '\'' +
+                ", birthdate= " + birthdate;
     }
 }

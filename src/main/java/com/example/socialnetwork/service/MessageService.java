@@ -19,50 +19,50 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class MessageService implements Observable<MessageChangedEvent> {
-    Repository<Long, Message> messages;
+    Repository<Long, Message> messageRepository;
     private List<Observer<MessageChangedEvent>> observers = new ArrayList<>();
 
-    public MessageService(Repository<Long, Message> messages) {
-        this.messages = messages;
+    public MessageService(Repository<Long, Message> messageRepository) {
+        this.messageRepository = messageRepository;
     }
 
     public void send(long senderId, long chatId, String text, Long reply) throws ValidationException, RepositoryException {
         Message message = new Message(senderId, chatId, text);
         message.setReply(reply);
-        messages.save(message);
+        messageRepository.save(message);
         notifyObservers(new MessageChangedEvent(ChangeEventType.ADD, message));
     }
 
     public void reply(long replyAt, long senderId, String text) throws ValidationException, ServiceException, RepositoryException {
-        Message message = messages.findOne(replyAt);
+        Message message = messageRepository.findOne(replyAt);
         if(message == null)
             throw new ServiceException("Message doesn't exists!");
         Message reply = new Message(senderId, message.getChatId(), text);
         reply.setReply(replyAt);
-        messages.save(reply);
+        messageRepository.save(reply);
         notifyObservers(new MessageChangedEvent(ChangeEventType.ADD, message));
     }
 
     public Iterable<Message> findAll(){
-        return messages.findAll();
+        return messageRepository.findAll();
     }
 
-    public List<Message> getGroupChat(Long idGroup){
-        Iterable<Message> allMessages = messages.findAll();
+    public List<Message> getMessagesFromChat(Long chatId){
+        Iterable<Message> allMessages = messageRepository.findAll();
         return StreamSupport.stream(allMessages.spliterator(), false).
-                filter(message -> message.getChatId().equals(idGroup)).
+                filter(message -> message.getChatId().equals(chatId)).
                 collect(Collectors.toList());
     }
 
     public Message findOne(long id) throws ServiceException {
-        Message message= messages.findOne(id);
+        Message message= messageRepository.findOne(id);
         if(message == null)
             throw new ServiceException("Message doesn't exists!");
         return message;
     }
 
     public void delete(Long id) throws IllegalArgumentException, ServiceException{
-        Message message = messages.delete(id);
+        Message message = messageRepository.delete(id);
         if(message == null)
             throw new ServiceException("No message with the given id.");
         notifyObservers(new MessageChangedEvent(ChangeEventType.DELETE, message));

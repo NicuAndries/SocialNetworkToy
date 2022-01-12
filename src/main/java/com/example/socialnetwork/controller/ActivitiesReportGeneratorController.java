@@ -56,18 +56,22 @@ public class ActivitiesReportGeneratorController {
         List<MessageDTO> raportList = page.getRaportAllMessages(firstDate.atStartOfDay(), secondDate.atStartOfDay());
 
         StringBuffer raportText = new StringBuffer();
+        raportText.append("\nMessages: ");
 
         raportList.forEach(message -> {
             String text =  message.toString();
-            raportText.append("\n" + text);
+            raportText.append("\n").append(text);
         });
 
+        raportText.append("\n___________________________________\n");
+
+        raportText.append("\nNew friendships: ");
         List<FriendDTO> raportList2 = null;
         raportList2 = page.getRaportAllNewFriends(firstDate.atStartOfDay().toLocalDate(), secondDate.atStartOfDay().toLocalDate());
 
         raportList2.forEach(message -> {
             String text =  message.toString();
-            raportText.append("\n" + text);
+            raportText.append("\n").append(text);
         });
 
         return raportText;

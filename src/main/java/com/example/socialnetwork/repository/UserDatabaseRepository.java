@@ -27,7 +27,6 @@ public class UserDatabaseRepository implements Repository<Long, User>{
         String sql = "select * from users where user_id = ?";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
-
             ps.setLong(1, id);
             ResultSet resultSet = ps.executeQuery();
             if (!resultSet.isBeforeFirst() ) {
@@ -46,23 +45,18 @@ public class UserDatabaseRepository implements Repository<Long, User>{
             List<Friend> friends = getFriendsList(user);
             user.setFriendsList(friends);
             return user;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
         return null;
     }
 
-    /**
-     * FindAll
-     * @return the entire list of Users
-     */
     @Override
     public Iterable<User> findAll() {
         Set<User> users = new HashSet<>();
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement statement = connection.prepareStatement("select * from users");
              ResultSet resultSet = statement.executeQuery()) {
-
             while (resultSet.next()) {
                 Long user_id = resultSet.getLong("user_id");
                 String firstName = resultSet.getString("first_name");
@@ -76,8 +70,8 @@ public class UserDatabaseRepository implements Repository<Long, User>{
                 users.add(user);
             }
             return users;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
         return null;
     }
@@ -93,7 +87,6 @@ public class UserDatabaseRepository implements Repository<Long, User>{
             statement.setLong(1, user.getId());
             statement.setLong(2, user.getId());
             ResultSet resultSet = statement.executeQuery();
-
             while (resultSet.next()) {
                 Long user_id = resultSet.getLong("user_id");
                 String firstName = resultSet.getString("first_name");
@@ -103,7 +96,6 @@ public class UserDatabaseRepository implements Repository<Long, User>{
                 String profilePicture = resultSet.getString("profile_image");
 
                 LocalDate date = resultSet.getDate("date").toLocalDate();
-
                 User friendUser = new User(firstName, lastName, gender, birthdate);
                 friendUser.setProfilePicture(profilePicture);
                 friendUser.setId(user_id);
@@ -111,8 +103,8 @@ public class UserDatabaseRepository implements Repository<Long, User>{
                 friends.add(friend);
             }
             return friends;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
         return null;
     }
@@ -147,11 +139,10 @@ public class UserDatabaseRepository implements Repository<Long, User>{
         String sql = "delete from users where user_id = ?";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
-
             ps.setLong(1, id);
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
         return entity;
     }
@@ -162,7 +153,6 @@ public class UserDatabaseRepository implements Repository<Long, User>{
         String sql = "update users set first_name = ?, last_name= ?, gender = ?, birthdate = ?, profile_image = ? where id = ?";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
-
             ps.setString(1, entity.getFirstName());
             ps.setString(2, entity.getLastName());
             ps.setString(3, entity.getGender().toString());
@@ -175,8 +165,8 @@ public class UserDatabaseRepository implements Repository<Long, User>{
             int lines = ps.executeUpdate();
             if(lines == 1)
                 return null;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
         return entity;
 

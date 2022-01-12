@@ -44,8 +44,8 @@ public class EvenimentNotificationDatabaseRepository {
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
     }
 
@@ -81,8 +81,8 @@ public class EvenimentNotificationDatabaseRepository {
             int lines = ps.executeUpdate();
             if(lines == 1)
                 return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
         return entity;
     }
@@ -96,8 +96,8 @@ public class EvenimentNotificationDatabaseRepository {
             int lines = ps.executeUpdate();
             if(lines == 1)
                 return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
         return evenimentNotification;
     }
@@ -114,8 +114,8 @@ public class EvenimentNotificationDatabaseRepository {
             int lines = ps.executeUpdate();
             if(lines == 1)
                 return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
         return entity;
     }

@@ -220,7 +220,7 @@ public class Page {
     }
 
     public List<Message> getChatMessages(Long chatId) {
-        return serviceMessage.getGroupChat(chatId);
+        return serviceMessage.getMessagesFromChat(chatId);
     }
 
     public List<MessageDTO> getChatMessagesFromAPeriod(LocalDateTime startDate, LocalDateTime endDate, Long chatId){

@@ -16,61 +16,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FriendRequestService implements Observable<RequestChangedEvent> {
-    private Repository<Pair<Long, Long>, FriendRequest> friendRequests;
+    private Repository<Pair<Long, Long>, FriendRequest> friendRequestRepository;
     private List<Observer<RequestChangedEvent>> observers=new ArrayList<>();
 
-    public FriendRequestService(Repository<Pair<Long, Long>, FriendRequest> friendRequests) {
-        this.friendRequests = friendRequests;
+    public FriendRequestService(Repository<Pair<Long, Long>, FriendRequest> friendRequestRepository) {
+        this.friendRequestRepository = friendRequestRepository;
     }
 
-    public void sendFriendRequest(Long id_sender, Long id_receiver) throws ValidationException, ServiceException, RepositoryException {
-        FriendRequest friendRequest = friendRequests.findOne(new Pair<>(id_receiver, id_sender));
+    public void sendFriendRequest(Long senderId, Long receiverId) throws ValidationException, ServiceException, RepositoryException {
+        FriendRequest friendRequest = friendRequestRepository.findOne(new Pair<>(receiverId, senderId));
         if(friendRequest != null) {
             String status = friendRequest.getStatus();
             switch (status) {
-                case "pending" -> throw new ServiceException("There is already a friend request from " + id_receiver + " to " + id_sender);
-                case "approved" -> throw new ServiceException("The users are already friends");
-                case "rejected" -> friendRequests.delete(new Pair<>(id_receiver, id_sender));
+                case "pending" -> throw new ServiceException("There is already a friend request from " + receiverId + " to " + senderId);
+                case "approved" -> throw new ServiceException("The users are already friends!");
+                case "rejected" -> friendRequestRepository.delete(new Pair<>(receiverId, senderId));
             }
         }
-
-        friendRequest = friendRequests.save(new FriendRequest(id_sender, id_receiver));
-
+        friendRequest = friendRequestRepository.save(new FriendRequest(senderId, receiverId));
         if(friendRequest != null) {
-            friendRequest = friendRequests.findOne(new Pair<>(id_sender, id_receiver));
+            friendRequest = friendRequestRepository.findOne(new Pair<>(senderId, receiverId));
             if(friendRequest.getStatus().equals("rejected")) {
-                FriendRequest newFriendRequest = new FriendRequest(id_sender, id_receiver, "pending", LocalDate.now());
-                friendRequests.update(newFriendRequest);
+                FriendRequest newFriendRequest = new FriendRequest(senderId, receiverId, "pending", LocalDate.now());
+                friendRequestRepository.update(newFriendRequest);
                 notifyObservers(new RequestChangedEvent(ChangeEventType.UPDATE, newFriendRequest, friendRequest));
             }
             else
-                throw new ServiceException("The request already exists");
+                throw new ServiceException("The request already exists!");
         }
         notifyObservers(new RequestChangedEvent(ChangeEventType.ADD, null));
     }
 
-    public void deleteFriendRequest(Long id_sender, Long id_receiver) throws ServiceException {
-        FriendRequest friendRequest = friendRequests.delete(new Pair<>(id_sender, id_receiver));
+    public void deleteFriendRequest(Long senderId, Long receiverId) throws ServiceException {
+        FriendRequest friendRequest = friendRequestRepository.delete(new Pair<>(senderId, receiverId));
         if(friendRequest == null)
-            throw new ServiceException("The friend request does not exist");
+            throw new ServiceException("Friend request does not exist!");
         else
             notifyObservers(new RequestChangedEvent(ChangeEventType.DELETE, friendRequest));
     }
 
-    public void updateFriendRequest(Long id_sender, Long id_receiver, String newStatus) throws ValidationException, ServiceException {
-        FriendRequest friendRequest = friendRequests.update(new FriendRequest(id_sender, id_receiver, newStatus));
+    public void updateFriendRequest(Long senderId, Long receiverId, String newStatus) throws ValidationException, ServiceException {
+        FriendRequest friendRequest = friendRequestRepository.update(new FriendRequest(senderId, receiverId, newStatus));
         if (friendRequest != null)
-            throw new ServiceException("The request does not exist");
+            throw new ServiceException("Friend request does not exist!");
         else
             notifyObservers(new RequestChangedEvent(ChangeEventType.UPDATE, friendRequest, friendRequest));
     }
 
     public Iterable<FriendRequest> findAll() {
-        return friendRequests.findAll();
+        return friendRequestRepository.findAll();
     }
 
-    public FriendRequest findOne(Long idSender, Long idReceiver){
-        return friendRequests.findOne(new Pair<>(idSender, idReceiver));
+    public FriendRequest findOne(Long senderId, Long receiverId){
+        return friendRequestRepository.findOne(new Pair<>(senderId, receiverId));
     }
 
     @Override

@@ -67,12 +67,10 @@ public class Message extends Entity<Long>{
 
     @Override
     public String toString() {
-        return "Message{" +
-                "userSenderId=" + userSenderId +
-                ", chatId=" + chatId +
-                ", text='" + text + '\'' +
-                ", time=" + time +
-                ", reply=" + reply +
-                '}';
+        return "sender= " + userSenderId +
+                ", chat= " + chatId +
+                ", text= '" + text + '\'' +
+                ", time= " + time +
+                ", reply= " + reply;
     }
 }

@@ -22,9 +22,6 @@ public class AccountDatabaseRepository implements Repository<String, Account>{
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, inputUsername);
             ResultSet resultSet = ps.executeQuery();
-/*            if (!resultSet.isBeforeFirst() ) {
-                return null;
-            }*/
             resultSet.next();
             String username = resultSet.getString("username");
             String password = resultSet.getString("password");
@@ -67,10 +64,9 @@ public class AccountDatabaseRepository implements Repository<String, Account>{
 
     @Override
     public Account update(Account entity) throws ValidationException {
-        String sql = "update credentials set password = ? where username = ?";
+        String sql = "update accounts set password = ? where username = ?";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
-
             ps.setString(1, entity.getPassword());
             ps.setString(2, entity.getUsername());
             int lines = ps.executeUpdate();

@@ -22,32 +22,32 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FriendshipService implements Observable<FriendshipChangedEvent> {
-    private Repository<Pair<Long, Long>, Friendship> relations;
+    private Repository<Pair<Long, Long>, Friendship> friendshipRepository;
     private List<Observer<FriendshipChangedEvent>> observers = new ArrayList<>();
 
-    public FriendshipService(Repository<Pair<Long, Long>, Friendship> relations) {
-        this.relations = relations;
+    public FriendshipService(Repository<Pair<Long, Long>, Friendship> friendshipRepository) {
+        this.friendshipRepository = friendshipRepository;
     }
 
     public void save(User user1, User user2) throws ValidationException, IllegalArgumentException, ServiceException, RepositoryException {
-        Friendship relation = new Friendship(user1, user2);
-        relation.setId(new Pair<>(user1.getId(), user2.getId()));
-        relations.save(relation);
-        notifyObservers(new FriendshipChangedEvent(ChangeEventType.ADD, relation));
+        Friendship friendship = new Friendship(user1, user2);
+        friendship.setId(new Pair<>(user1.getId(), user2.getId()));
+        friendshipRepository.save(friendship);
+        notifyObservers(new FriendshipChangedEvent(ChangeEventType.ADD, friendship));
     }
 
 
     public void delete(Long idUser1, Long idUser2) throws IllegalArgumentException, ServiceException{
         Pair<Long, Long> id = new Pair<>(idUser1, idUser2);
-        Friendship relation = relations.delete(id);
-        if(relation == null)
-            throw new ServiceException("No relation was found between the tho given users.");
-        notifyObservers(new FriendshipChangedEvent(ChangeEventType.DELETE, relation));
+        Friendship friendship = friendshipRepository.delete(id);
+        if(friendship == null)
+            throw new ServiceException("No frienship was found between the tho given users.");
+        notifyObservers(new FriendshipChangedEvent(ChangeEventType.DELETE, friendship));
     }
 
     public ArrayList<FriendshipDTO> findAll(){
         ArrayList<FriendshipDTO> friends = new ArrayList<>();
-        relations.findAll().forEach(r -> {
+        friendshipRepository.findAll().forEach(r -> {
             User user1 = r.getFirstUser();
             User user2 = r.getSecondUser();
             LocalDate date = r.getDate();
@@ -75,8 +75,8 @@ public class FriendshipService implements Observable<FriendshipChangedEvent> {
                 .collect(Collectors.toList());
     }
 
-    public Friendship findOne(Long idUser1, long idUser2){
-        return relations.findOne(new Pair<>(idUser1, idUser2));
+    public Friendship findOne(Long id1, long id2){
+        return friendshipRepository.findOne(new Pair<>(id1, id2));
     }
 
     @Override

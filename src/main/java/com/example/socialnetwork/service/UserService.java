@@ -17,43 +17,43 @@ import java.util.List;
 import java.util.stream.StreamSupport;
 
 public class UserService implements Observable<UserChangedEvent> {
-    private Repository<Long, User> users;
+    private Repository<Long, User> userRepository;
     private List<Observer<UserChangedEvent>> observers = new ArrayList<>();
 
-    public UserService(Repository<Long, User> users) {
-        this.users = users;
+    public UserService(Repository<Long, User> userRepository) {
+        this.userRepository = userRepository;
     }
 
     public void save(String first_name, String last_name, String gender, LocalDate birthdate) throws ValidationException, IllegalArgumentException, RepositoryException, ServiceException, DateTimeParseException {
         User user = new User(first_name, last_name, gender, birthdate);
-        User save = users.save(user);
+        User save = userRepository.save(user);
         if(save != null)
-            throw new ServiceException("Id already in use!");
+            throw new ServiceException("User already exist!");
         notifyObservers(new UserChangedEvent(ChangeEventType.ADD, user));
     }
 
     public void delete(Long id) throws IllegalArgumentException, ServiceException{
-        User user = users.delete(id);
+        User user = userRepository.delete(id);
         if(user == null)
             throw new ServiceException("No user with the given id.");
         notifyObservers(new UserChangedEvent(ChangeEventType.DELETE, user));
     }
 
-    public void update(long id, String first_name, String last_name, String gender, LocalDate birthdate)throws ValidationException, IllegalArgumentException, RepositoryException, ServiceException, DateTimeParseException{
+    public void update(long id, String first_name, String last_name, String gender, LocalDate birthdate) throws ValidationException, IllegalArgumentException, RepositoryException, ServiceException, DateTimeParseException{
         User user = new User(first_name, last_name, gender, birthdate);
         user.setId(id);
-        User update = users.update(user);
+        User update = userRepository.update(user);
         if(update != null)
             throw new ServiceException("No user with the given id.");
         notifyObservers(new UserChangedEvent(ChangeEventType.UPDATE, user, update));
     }
 
     public Iterable<User> findAll(){
-        return users.findAll();
+        return userRepository.findAll();
     }
 
     public User findOne(long id) throws ServiceException {
-        User user = users.findOne(id);
+        User user = userRepository.findOne(id);
         if(user == null)
             throw new ServiceException("No user with the given id.");
         return user;
@@ -61,7 +61,7 @@ public class UserService implements Observable<UserChangedEvent> {
 
     public void updateProfilePicture(User user, String path) throws ValidationException {
         user.setProfilePicture(path);
-        users.update(user);
+        userRepository.update(user);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class UserService implements Observable<UserChangedEvent> {
 
     @Override
     public void notifyObservers(UserChangedEvent t) {
-        observers.stream().forEach(obs->obs.update(t));
+        observers.forEach(obs->obs.update(t));
     }
 
 }

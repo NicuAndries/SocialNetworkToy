@@ -5,14 +5,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class MessageDTO {
-    private Long idMessage;
+    private Long messageId;
     private String sender;
     private LocalDateTime dateTime;
     private String text;
     private String repliedTo;
 
-    public MessageDTO(Long idMessage, String sender, LocalDateTime dateTime, String text, String repliedTo) {
-        this.idMessage = idMessage;
+    public MessageDTO(Long messageId, String sender, LocalDateTime dateTime, String text, String repliedTo) {
+        this.messageId = messageId;
         this.sender = sender;
         this.dateTime = dateTime;
         this.text = text;
@@ -21,16 +21,16 @@ public class MessageDTO {
 
     @Override
     public String toString() {
-        String ret = "-------------------------\n" +
-                "Id: " + idMessage +
-                "\nTime: " + dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
-                "\nFrom: " + sender +
-                "\nMessage: " + text;
-
+        String reply = "";
         if (repliedTo != null)
-            ret += "\nReplied to: " + repliedTo + "\n-------------------------";
-        else
-            ret +=  "\n-------------------------";
-        return ret;
+            reply = reply + "\nReplied to: " + repliedTo;
+
+        return "___________________________________" +
+                "\nMessage ID: " + messageId +
+                "\nDate|Time: " + dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + " at: " +
+                 dateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")) +
+                 reply +
+                "\nSender: " + sender +
+                "\nText: " + text;
     }
 }

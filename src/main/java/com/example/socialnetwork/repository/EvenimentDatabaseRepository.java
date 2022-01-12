@@ -173,8 +173,8 @@ public class EvenimentDatabaseRepository implements Repository<Long, Eveniment> 
                         }
                     }
             );
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
     }
 }

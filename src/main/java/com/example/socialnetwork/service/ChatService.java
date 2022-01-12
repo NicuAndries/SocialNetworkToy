@@ -23,8 +23,8 @@ public class ChatService{
     public Chat save(Chat chat) {
         try {
             return chatRepository.save(chat);
-        } catch (ValidationException | RepositoryException e) {
-            e.printStackTrace();
+        } catch (ValidationException | RepositoryException exception) {
+            System.out.println(exception.getMessage());
         }
         return null;
     }

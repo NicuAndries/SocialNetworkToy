@@ -152,23 +152,15 @@ public class ChatDatabaseRepository implements Repository<Long, Chat> {
                     {
                         try {
                             ps.setLong(1, id);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                        try {
                             ps.setLong(2, member);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                        try {
                             ps.executeUpdate();
-                        } catch (SQLException e) {
-                            e.printStackTrace();
+                        } catch (SQLException exception) {
+                            System.out.println(exception.getMessage());
                         }
                     }
             );
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
     }
 }

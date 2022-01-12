@@ -49,8 +49,8 @@ public class FriendDTO {
 
     @Override
     public String toString() {
-        return "" + id +" | firstName: " + firstName +
-                " | lastName: " + lastName +
-                " | friends since: " + date;
+        return "You are friend with " + firstName +
+                " " + lastName +
+                " since " + date;
     }
 }

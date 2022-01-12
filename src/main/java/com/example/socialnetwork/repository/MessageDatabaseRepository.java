@@ -42,8 +42,8 @@ public class MessageDatabaseRepository implements Repository<Long, Message>{
             message.setId(id);
 
             return message;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
         return null;
     }
@@ -69,8 +69,8 @@ public class MessageDatabaseRepository implements Repository<Long, Message>{
                 messages.add(message);
             }
             return messages;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
         return null;
     }
@@ -95,8 +95,8 @@ public class MessageDatabaseRepository implements Repository<Long, Message>{
             Long id = resultSet.getLong("message_id");
 
             return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
         return entity;
     }
@@ -109,18 +109,17 @@ public class MessageDatabaseRepository implements Repository<Long, Message>{
         String sql = "delete from messages where message_id = ?";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
-
             ps.setLong(1, id);
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         }
         return entity;
     }
 
     @Override
     public Message update(Message entity) {
-        String sql = "update users set text = ?, reply = ? where message_id = ?";
+        String sql = "update messages set text = ?, reply = ? where message_id = ?";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
