@@ -123,5 +123,7 @@ public class MessageReportGeneratorController {
         String heading = getHeader(2) ;
         pdfWriter.addPage(heading, raportText);
         pdfWriter.saveAndClose();
+
+        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }
 }

@@ -95,6 +95,7 @@ public class ActivitiesReportGeneratorController {
         String heading = getHeader(1) ;
         pdfWriter.addPage(heading, raportText);
         pdfWriter.saveAndClose();
+        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }
 }
 
