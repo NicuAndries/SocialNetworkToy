@@ -39,12 +39,14 @@ public class ChatCreatorCellView extends ListCell<Friend> {
 
         if (empty || friend == null) {
             setText(null);
+            setStyle("-fx-background-color: #1D232A");
             setGraphic(null);
         } else {
             labelName.setText(friend.getFirstName() + " " + friend.getLastName());
             labelBirthdata.setText(String.valueOf(friend.getBirthdate()));
             Image image = new Image(friend.getProfilePicture());
             userImage.setImage(image);
+            setStyle("-fx-background-color: #1D232A");
             setText(null);
             setGraphic(anchorPane);
         }

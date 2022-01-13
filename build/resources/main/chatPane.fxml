@@ -49,10 +49,17 @@
                </font>
             </Label>
             <Label fx:id="userStatus" layoutX="14.0" layoutY="38.0" prefHeight="17.0" prefWidth="150.0" text="Offline" />
-            <Button fx:id="exportConversationButton" layoutX="244.0" layoutY="20.0" mnemonicParsing="false" onAction="#onExportConversationButton" style="-fx-background-color: #242131;" text="Export conversation" textFill="WHITE">
+            <Button fx:id="exportConversationButton" layoutX="215.0" layoutY="15.0" mnemonicParsing="false" onAction="#onExportConversationButton" style="-fx-background-color: blue;" text="Export conversation" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/pdfAlb.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
       </Pane>

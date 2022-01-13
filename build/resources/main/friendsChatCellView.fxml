@@ -3,15 +3,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="65.0" prefWidth="176.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="65.0" prefWidth="176.0" style="-fx-background-color: #1D232A;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label fx:id="labelName" layoutX="48.0" layoutY="14.0" prefHeight="20.0" prefWidth="187.0" text="Label" />
-        <Label fx:id="labelBirthdata" layoutX="48.0" layoutY="34.0" prefHeight="18.0" prefWidth="122.0" text="Label">
+        <Label fx:id="labelName" layoutX="48.0" layoutY="7.0" prefHeight="20.0" prefWidth="187.0" text="Label" textFill="WHITE" />
+        <Label fx:id="labelBirthdata" layoutX="48.0" layoutY="27.0" prefHeight="18.0" prefWidth="122.0" text="Label" textFill="WHITE">
          <font>
             <Font size="11.0" />
          </font></Label>
         <ImageView fx:id="userImage" fitHeight="45.0" fitWidth="34.0" layoutX="6.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" />
+      <Line endX="48.5999755859375" fill="#363d45" layoutX="97.0" layoutY="62.0" startX="-100.0" stroke="#363d45" />
     </children>
 </AnchorPane>

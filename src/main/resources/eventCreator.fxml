@@ -8,21 +8,21 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="448.0" prefWidth="495.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.socialnetwork.controller.EventCreatorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="448.0" prefWidth="495.0" style="-fx-background-color: #242131;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.socialnetwork.controller.EventCreatorController">
    <children>
-      <Label layoutX="116.0" layoutY="186.0" prefHeight="18.0" prefWidth="70.0" text="Event Name:" />
-      <Label layoutX="116.0" layoutY="251.0" prefHeight="18.0" prefWidth="102.0" text="Date:" />
-      <Label layoutX="116.0" layoutY="317.0" prefHeight="18.0" prefWidth="70.0" text="Time:" />
+      <Label layoutX="116.0" layoutY="186.0" prefHeight="18.0" prefWidth="70.0" text="Event Name:" textFill="WHITE" />
+      <Label layoutX="116.0" layoutY="251.0" prefHeight="18.0" prefWidth="102.0" text="Date:" textFill="WHITE" />
+      <Label layoutX="116.0" layoutY="317.0" prefHeight="18.0" prefWidth="70.0" text="Time:" textFill="WHITE" />
       <TextField fx:id="nameTextField" layoutX="117.0" layoutY="204.0" prefHeight="26.0" prefWidth="268.0" promptText="Enter name.." />
       <TextField fx:id="timeTextField" layoutX="114.0" layoutY="335.0" prefHeight="26.0" prefWidth="268.0" promptText="Enter Time:" />
       <DatePicker fx:id="datePicker" layoutX="114.0" layoutY="269.0" prefHeight="26.0" prefWidth="268.0" promptText="Enter date.." />
-      <Button fx:id="createEventButton" layoutX="180.0" layoutY="392.0" mnemonicParsing="false" onAction="#onCreateEventButton" text="Create" />
-      <Button layoutX="262.0" layoutY="392.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="createEventButton" layoutX="180.0" layoutY="392.0" mnemonicParsing="false" onAction="#onCreateEventButton" style="-fx-background-color: blue;" text="Create" textFill="WHITE" />
+      <Button layoutX="262.0" layoutY="392.0" mnemonicParsing="false" style="-fx-background-color: blue;" text="Cancel" textFill="WHITE" />
       <Button fx:id="selectImageButton" layoutX="136.0" layoutY="14.0" mnemonicParsing="false" prefHeight="153.0" prefWidth="222.0" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fx:id="eventImage" fitHeight="150.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/select_image.png" />
+                  <Image url="@images/addImageAlb.png" />
                </image>
             </ImageView>
          </graphic>

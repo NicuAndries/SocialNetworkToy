@@ -24,31 +24,38 @@
             </children>
         </AnchorPane>
     </left>
-   <right>
+   <center>
         <AnchorPane prefHeight="550.0" prefWidth="379.0" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="35.0" layoutY="224.0" prefHeight="18.0" prefWidth="66.0" text="Birthdate" />
+                <Label layoutX="31.0" layoutY="270.0" prefHeight="18.0" prefWidth="66.0" text="Birthdate:" />
                 <Label layoutX="13.0" layoutY="307.0" prefHeight="18.0" prefWidth="81.0" />
-                <PasswordField fx:id="confirmPasswordTextField" layoutX="165.0" layoutY="396.0" promptText="Confirm password" />
-                <Button fx:id="signUpButton" layoutX="140.0" layoutY="475.0" mnemonicParsing="false" onAction="#onSignUpButton" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: #1d3557;" text="SignUp" textFill="WHITE">
+                <PasswordField fx:id="confirmPasswordTextField" layoutX="165.0" layoutY="430.0" promptText="Confirm password" />
+                <Button fx:id="signUpButton" layoutX="140.0" layoutY="492.0" mnemonicParsing="false" onAction="#onSignUpButton" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: #1d3557;" text="SignUp" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font></Button>
-                <TextField fx:id="secondNameTextField" layoutX="165.0" layoutY="176.0" promptText="Last name" />
-                <TextField fx:id="firstNameTextField" layoutX="165.0" layoutY="132.0" promptText="First name" />
-                <Label layoutX="35.0" layoutY="136.0" prefHeight="18.0" prefWidth="66.0" text="First name" />
-                <Label layoutX="35.0" layoutY="180.0" prefHeight="18.0" prefWidth="66.0" text="Last name" />
-                <Label layoutX="35.0" layoutY="307.0" prefHeight="18.0" prefWidth="66.0" text="Username" />
-                <TextField fx:id="usernameSignUpTextField" layoutX="164.0" layoutY="303.0" promptText="Username" />
-                <Label layoutX="35.0" layoutY="265.0" prefHeight="18.0" prefWidth="66.0" text="Gender" />
-                <PasswordField fx:id="passwordTextField" layoutX="165.0" layoutY="350.0" promptText="Password" />
-                <Label layoutX="35.0" layoutY="354.0" prefHeight="18.0" prefWidth="81.0" text="Password" />
-                <ComboBox fx:id="genderComboBox" layoutX="164.0" layoutY="261.0" prefWidth="150.0" promptText="Gender" />
-                <Label layoutX="33.0" layoutY="400.0" prefHeight="18.0" prefWidth="122.0" text="Confirm password" />
+                <TextField fx:id="secondNameTextField" layoutX="165.0" layoutY="226.0" promptText="Last name" />
+                <TextField fx:id="firstNameTextField" layoutX="164.0" layoutY="185.0" promptText="First name" />
+                <Label layoutX="31.0" layoutY="188.0" prefHeight="18.0" prefWidth="66.0" text="First name:" />
+                <Label layoutX="31.0" layoutY="229.0" prefHeight="18.0" prefWidth="66.0" text="Last name:" />
+                <Label layoutX="33.0" layoutY="351.0" prefHeight="18.0" prefWidth="76.0" text="Username:" />
+                <TextField fx:id="usernameSignUpTextField" layoutX="164.0" layoutY="348.0" promptText="Username" />
+                <Label layoutX="31.0" layoutY="310.0" prefHeight="18.0" prefWidth="82.0" text="Gender:" />
+                <PasswordField fx:id="passwordTextField" layoutX="165.0" layoutY="389.0" promptText="Password" />
+                <Label layoutX="31.0" layoutY="392.0" prefHeight="18.0" prefWidth="81.0" text="Password:" />
+                <ComboBox fx:id="genderComboBox" layoutX="164.0" layoutY="307.0" prefWidth="150.0" promptText="Gender" />
+                <Label layoutX="33.0" layoutY="433.0" prefHeight="18.0" prefWidth="122.0" text="Confirm password:" />
                 <ImageView fitHeight="59.0" fitWidth="53.0" layoutX="165.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
-                <DatePicker fx:id="birthdateComboBox" layoutX="164.0" layoutY="220.0" prefHeight="26.0" prefWidth="151.0" />
-                <Label fx:id="signUpLabel" layoutX="80.0" layoutY="457.0" prefHeight="18.0" prefWidth="210.0" />
+                <DatePicker fx:id="birthdateComboBox" layoutX="164.0" layoutY="266.0" prefHeight="26.0" prefWidth="151.0" />
+                <Label fx:id="signUpLabel" layoutX="80.0" layoutY="473.0" prefHeight="18.0" prefWidth="210.0" />
+            <Button layoutX="108.0" layoutY="14.0" mnemonicParsing="false" prefHeight="137.0" prefWidth="152.0" style="-fx-background-color: transparent;" />
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="117.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/addImage.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="27.0" layoutY="84.0" prefHeight="18.0" prefWidth="90.0" text="Profile picture:" />
             </children>
         </AnchorPane>
-   </right>
+   </center>
 </BorderPane>

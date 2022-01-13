@@ -34,10 +34,17 @@
                         <Font name="Verdana Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="exportButton" layoutX="446.0" layoutY="598.0" mnemonicParsing="false" onAction="#onExportButton" style="-fx-background-color: #0000ff;" text="Export user activities to PDF" textFill="WHITE">
+                  <Button fx:id="exportButton" layoutX="502.0" layoutY="593.0" mnemonicParsing="false" onAction="#onExportButton" style="-fx-background-color: #0000ff;" text="Export activity" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/pdfAlb.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                   <Button fx:id="birthdateProfileButton" alignment="BASELINE_LEFT" layoutX="221.0" layoutY="399.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="209.0" style="-fx-background-color: #0000ff;" text="Birthdate: " textFill="WHITE">
                      <graphic>
