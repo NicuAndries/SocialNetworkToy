@@ -120,7 +120,7 @@ public class UserDatabaseRepository implements Repository<Long, User>{
             ps.setString(2, entity.getLastName());
             ps.setString(3, entity.getGender());
             ps.setDate(4, Date.valueOf(entity.getBirthdate()));
-            ps.setDate(5, Date.valueOf(entity.getProfilePicture()));
+            ps.setString(5, entity.getProfilePicture());
             int lines = ps.executeUpdate();
             if(lines == 1)
                 return null;

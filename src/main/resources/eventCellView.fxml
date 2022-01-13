@@ -14,7 +14,7 @@
             <Image url="@images/defaultImage.png" />
          </image>
       </ImageView>
-      <Label fx:id="eventDate" layoutX="22.0" layoutY="241.0" prefHeight="18.0" prefWidth="200.0" text="WED, DEC 29 AT 3:00 AM">
+      <Label fx:id="eventDate" layoutX="22.0" layoutY="241.0" prefHeight="18.0" prefWidth="392.0" text="WED, DEC 29 AT 3:00 AM">
          <font>
             <Font name="Verdana Bold" size="13.0" />
          </font>
@@ -24,11 +24,10 @@
             <Font name="Verdana Bold" size="15.0" />
          </font>
       </Label>
-      <Button fx:id="goingButton" layoutX="95.0" layoutY="300.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="78.0" text="Going">
+      <Button fx:id="goingButton" alignment="BASELINE_LEFT" layoutX="95.0" layoutY="300.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="78.0" style="-fx-background-color: #0000ff;" text="Going" textFill="WHITE">
          <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
-         </graphic>
-      </Button>
-      <Button fx:id="notificationButton" layoutX="208.0" layoutY="301.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" text="Notifications: Off" />
+            <ImageView fx:id="goingImage" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic></Button>
+      <Button fx:id="notificationButton" layoutX="208.0" layoutY="301.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" style="-fx-background-color: #0000ff;" text="Notifications: Off" textFill="WHITE" />
    </children>
 </AnchorPane>

@@ -44,7 +44,7 @@ public class FindFriendsCellView extends ListCell<User> {
     @Override
     protected void updateItem(User user, boolean empty) {
         super.updateItem(user, empty);
-        if (empty) {
+        if (empty || user == null) {
             setText(null);
             setGraphic(null);
         } else {

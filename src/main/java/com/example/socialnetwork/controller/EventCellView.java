@@ -17,6 +17,7 @@ public class EventCellView extends ListCell<Eveniment> {
     public Label eventName;
     public Label eventDate;
     public Button goingButton;
+    public ImageView goingImage;
     public Button notificationButton;
     public AnchorPane anchorPane;
     private Page page;
@@ -43,29 +44,36 @@ public class EventCellView extends ListCell<Eveniment> {
             setGraphic(null);
         } else {
             eventName.setText(chat.getName());
-            eventDate.setText(String.valueOf(chat.getDate()));
+            //WED, DEC 29 AT 3:00 AM
+            String month = String.valueOf(chat.getDate().getMonth());
+            String dayString = String.valueOf(chat.getDate().getDayOfWeek());
+            String day = String.valueOf(chat.getDate().getDayOfMonth());
+            eventDate.setText(dayString + ", " + month + " " + day + " AT " + chat.getTime());
             EvenimentNotification eventNotification = page.findOneSubscribe(new EvenimentNotification(getItem().getId(), page.getIdUser(), "", ""));
             if (eventNotification != null) {
-                goingButton.setStyle("-fx-background-color: #FFA500");
+                Image image = new Image("images/checked.png");
+                goingImage.setImage(image);
                 if (eventNotification.getNotification().equals("on"))
-                    notificationButton.setStyle("-fx-background-color: #FFA500");
-                else
-                    notificationButton.setStyle(null);
+                    notificationButton.setText("Notifications: On");
+                 else
+                    notificationButton.setText("Notifications: Off");
             } else {
-                goingButton.setStyle(null);
-                notificationButton.setStyle(null);
+                goingImage.setImage(null);
+                notificationButton.setText("Notifications: Off");
             }
 
             goingButton.setOnAction(event -> {
                 EvenimentNotification eveniment = new EvenimentNotification(getItem().getId(), page.getIdUser(), "off", "notsent");
                 EvenimentNotification evenimentNotification = page.findOneSubscribe(eveniment);
                 if (evenimentNotification == null) {
-                    goingButton.setStyle("-fx-background-color: #FFA500");
                     page.subscribeToEvent(eveniment);
+                    Image image = new Image("images/checked.png");
+                    goingImage.setImage(image);
                 }
                 else {
                     page.unsubscribeFromEvent(eveniment);
-                    goingButton.setStyle(null);
+                    notificationButton.setText("Notifications: Off");
+                    goingImage.setImage(null);
                 }
             });
 
@@ -77,11 +85,11 @@ public class EventCellView extends ListCell<Eveniment> {
                 else if (evenimentNotification.getNotification().equals("off")) {
                     evenimentNotification.setNotification("on");
                     page.updateEventNotification(evenimentNotification);
-                    notificationButton.setStyle("-fx-background-color: #FFA500");
+                    notificationButton.setText("Notifications: On");
                 } else if (evenimentNotification.getNotification().equals("on")) {
                     evenimentNotification.setNotification("off");
                     page.updateEventNotification(evenimentNotification);
-                    notificationButton.setStyle(null);
+                    notificationButton.setText("Notifications: Off");
                 }
             });
 
