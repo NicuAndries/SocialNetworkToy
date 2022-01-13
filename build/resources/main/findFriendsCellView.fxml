@@ -13,10 +13,10 @@
             <Font size="14.0" />
         </font>
     </Label>
-    <Button fx:id="addFriendButton" layoutX="515.0" layoutY="29.0" mnemonicParsing="false" text="Add Friend">
+    <Button fx:id="addFriendButton" layoutX="515.0" layoutY="29.0" mnemonicParsing="false" style="-fx-background-color: blue;" text="Add Friend" textFill="WHITE">
         <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@images/addfriend.png" />
+                <Image url="@images/addFriendAlb.png" />
             </ImageView>
         </graphic>
     </Button>

@@ -13,19 +13,19 @@
          <font>
             <Font size="14.0" />
          </font></Label>
-      <Button fx:id="addFriendButton" layoutX="509.0" layoutY="13.0" mnemonicParsing="false" text="Add Friend">
+      <Button fx:id="addFriendButton" layoutX="509.0" layoutY="13.0" mnemonicParsing="false" style="-fx-background-color: blue;" text="Add Friend" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/addfriend.png" />
+                  <Image url="@images/addFriendAlb.png" />
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="cancelFriendButton" layoutX="509.0" layoutY="47.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="98.0" text="Cancel">
+      <Button fx:id="cancelFriendButton" alignment="CENTER" layoutX="509.0" layoutY="47.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="98.0" style="-fx-background-color: blue;" text="Cancel" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/unfriend.png" />
+                  <Image url="@images/unfriendWhite.png" />
                </image>
             </ImageView>
          </graphic></Button>
