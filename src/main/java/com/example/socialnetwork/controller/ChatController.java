@@ -96,9 +96,6 @@ public class ChatController implements Observer<MessageChangedEvent> {
                     messagesChatName.setText(selectedItem.getName());
                     userStatus.setText(selectedItem.getMembers().size() + " members");
                 }
-            } else {
-                userStatus.setVisible(false);
-                messagesChatName.setVisible(false);
             }
             populateChat(chatId);
             messageListView.setItems(messageObservableList);
