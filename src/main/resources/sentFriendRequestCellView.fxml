@@ -14,7 +14,7 @@
                 <Font size="14.0" />
             </font></Label>
         <ImageView fx:id="userImage" fitHeight="65.0" fitWidth="65.0" layoutX="6.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="labelBirthdata" layoutX="81.0" layoutY="42.0" prefHeight="18.0" prefWidth="122.0" text="Label" />
+      <Label fx:id="labelBirthdata" layoutX="94.0" layoutY="43.0" prefHeight="18.0" prefWidth="122.0" text="Label" />
       <Button fx:id="cancelRequestButton" layoutX="494.0" layoutY="28.0" mnemonicParsing="false" style="-fx-background-color: blue;" text="Cancel Request" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -24,5 +24,10 @@
             </ImageView>
          </graphic>
       </Button>
+      <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="72.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/calendarNegru.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>
