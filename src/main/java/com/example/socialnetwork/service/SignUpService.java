@@ -22,8 +22,8 @@ public class SignUpService {
         this.userService = userService;
     }
 
-    public void signUp(String username, String pass, String first_name, String last_name, String gender, LocalDate birthdate) throws ValidationException, ServiceException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, RepositoryException {
-        userService.save(first_name, last_name, gender, birthdate);
+    public void signUp(String username, String pass, String first_name, String last_name, String gender, LocalDate birthdate, String image) throws ValidationException, ServiceException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, RepositoryException {
+        userService.save(first_name, last_name, gender, birthdate, image);
         List<User> userList = StreamSupport.stream(userService.findAll().spliterator(), false).toList();
         Long user_id = userList.stream().max(Comparator.comparing(User::getId)).get().getId();
         accountService.save(username, pass, user_id);

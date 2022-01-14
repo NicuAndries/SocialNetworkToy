@@ -24,8 +24,9 @@ public class UserService implements Observable<UserChangedEvent> {
         this.userRepository = userRepository;
     }
 
-    public void save(String first_name, String last_name, String gender, LocalDate birthdate) throws ValidationException, IllegalArgumentException, RepositoryException, ServiceException, DateTimeParseException {
+    public void save(String first_name, String last_name, String gender, LocalDate birthdate, String image) throws ValidationException, IllegalArgumentException, RepositoryException, ServiceException, DateTimeParseException {
         User user = new User(first_name, last_name, gender, birthdate);
+        user.setProfilePicture(image);
         User save = userRepository.save(user);
         if(save != null)
             throw new ServiceException("User already exist!");

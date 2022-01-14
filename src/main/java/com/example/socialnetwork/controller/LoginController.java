@@ -70,10 +70,8 @@ public class LoginController {
             passwordTextField.setText("");
             connectUser(user_id, ((Node) (actionEvent.getSource())).getScene().getWindow());
             ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
-        } catch (CredentialException exception) {
+        } catch (CredentialException | IllegalBlockSizeException | InvalidKeyException | BadPaddingException exception) {
             loginMessageLabel.setText(exception.getMessage());
-        } catch (IllegalBlockSizeException | InvalidKeyException | BadPaddingException exception) {
-            System.out.println(exception.getMessage());
         }
     }
 

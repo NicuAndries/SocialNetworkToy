@@ -25,7 +25,7 @@
         </AnchorPane>
     </left>
    <center>
-        <AnchorPane prefHeight="550.0" prefWidth="379.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="550.0" prefWidth="379.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <children>
                 <Label layoutX="31.0" layoutY="270.0" prefHeight="18.0" prefWidth="66.0" text="Birthdate:" />
                 <Label layoutX="13.0" layoutY="307.0" prefHeight="18.0" prefWidth="81.0" />
@@ -47,13 +47,15 @@
                 <Label layoutX="33.0" layoutY="433.0" prefHeight="18.0" prefWidth="122.0" text="Confirm password:" />
                 <ImageView fitHeight="59.0" fitWidth="53.0" layoutX="165.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
                 <DatePicker fx:id="birthdateComboBox" layoutX="164.0" layoutY="266.0" prefHeight="26.0" prefWidth="151.0" />
-                <Label fx:id="signUpLabel" layoutX="80.0" layoutY="473.0" prefHeight="18.0" prefWidth="210.0" />
-            <Button layoutX="108.0" layoutY="14.0" mnemonicParsing="false" prefHeight="137.0" prefWidth="152.0" style="-fx-background-color: transparent;" />
-            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="117.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/addImage.png" />
-               </image>
-            </ImageView>
+                <Label fx:id="signUpLabel" alignment="CENTER" layoutX="80.0" layoutY="473.0" prefHeight="18.0" prefWidth="210.0" textFill="RED" />
+            <Button fx:id="selectImageButton" layoutX="108.0" layoutY="14.0" mnemonicParsing="false" prefHeight="137.0" prefWidth="152.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fx:id="userImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/addImage.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
             <Label layoutX="27.0" layoutY="84.0" prefHeight="18.0" prefWidth="90.0" text="Profile picture:" />
             </children>
         </AnchorPane>
