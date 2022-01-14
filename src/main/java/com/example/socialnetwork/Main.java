@@ -44,7 +44,7 @@ public class Main extends Application {
         loginController.setServices(loginService, signUpService, page, friendRequestService);
 
         Scene scene = new Scene(root);
-        stage.setTitle("Hello!");
+        stage.setTitle("Kikoriki!");
         stage.setScene(scene);
         stage.show();
     }

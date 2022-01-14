@@ -155,7 +155,7 @@ public class ChatController implements Observer<MessageChangedEvent> {
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
-        stage.setTitle("Create chat!");
+        stage.setTitle("Kikoriki");
         stage.setScene(scene);
         stage.show();
     }

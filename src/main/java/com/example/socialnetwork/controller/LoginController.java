@@ -52,7 +52,7 @@ public class LoginController {
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
-        stage.setTitle("Smeshariki");
+        stage.setTitle("Kikoriki");
         stage.setScene(scene);
         stage.show();
     }
@@ -89,7 +89,7 @@ public class LoginController {
             e.printStackTrace();
         }
 
-        stage.setTitle("Mandarin");
+        stage.setTitle("Kikoriki");
         stage.setScene(scene);
         stage.show();
     }

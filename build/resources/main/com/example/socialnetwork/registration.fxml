@@ -10,6 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="764.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.socialnetwork.controller.SignUpController">
@@ -21,6 +22,15 @@
                         <Image url="@../../../images/pattern.jpg" />
                     </image>
                 </ImageView>
+            <Pane layoutX="-2.0" layoutY="194.0" prefHeight="180.0" prefWidth="386.0" style="-fx-background-color: #1d3557;">
+               <children>
+                  <ImageView fitHeight="243.0" fitWidth="384.0" layoutX="1.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/smeshariki-removebg-preview.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
             </children>
         </AnchorPane>
     </left>
