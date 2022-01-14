@@ -22,6 +22,9 @@ public class AccountDatabaseRepository implements Repository<String, Account>{
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, inputUsername);
             ResultSet resultSet = ps.executeQuery();
+            if (!resultSet.isBeforeFirst() ) {
+                return null;
+            }
             resultSet.next();
             String username = resultSet.getString("username");
             String password = resultSet.getString("password");

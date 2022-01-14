@@ -40,8 +40,6 @@ public class FriendshipService implements Observable<FriendshipChangedEvent> {
     public void delete(Long idUser1, Long idUser2) throws IllegalArgumentException, ServiceException{
         Pair<Long, Long> id = new Pair<>(idUser1, idUser2);
         Friendship friendship = friendshipRepository.delete(id);
-        if(friendship == null)
-            throw new ServiceException("No frienship was found between the tho given users.");
         notifyObservers(new FriendshipChangedEvent(ChangeEventType.DELETE, friendship));
     }
 

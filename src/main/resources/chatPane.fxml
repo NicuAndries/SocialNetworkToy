@@ -18,10 +18,9 @@
       <AnchorPane prefHeight="642.0" prefWidth="254.0" style="-fx-background-color: #242131;">
          <children>
             <ListView fx:id="chatListView" layoutY="63.0" prefHeight="578.0" prefWidth="254.0" style="-fx-background-color: #242131;" />
-            <TextField layoutX="22.0" layoutY="18.0" promptText="Search.." style="-fx-background-color: #363D45;" />
-            <Button fx:id="createChatButton" layoutX="197.0" layoutY="13.0" mnemonicParsing="false" onAction="#onCreateChatButton" prefHeight="34.0" prefWidth="30.0" style="-fx-background-color: transparent;">
+            <Button fx:id="createChatButton" layoutY="31.0" mnemonicParsing="false" onAction="#onCreateChatButton" prefHeight="34.0" prefWidth="30.0" style="-fx-background-color: transparent;">
                <graphic>
-                  <ImageView fitHeight="18.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/+.png" />
                      </image>
@@ -29,6 +28,17 @@
                </graphic>
             </Button>
             <Line endX="154.3999786376953" endY="3.814697265625E-6" layoutX="100.0" layoutY="62.0" startX="-100.0" stroke="#363d45" />
+            <Label layoutX="6.0" layoutY="-2.0" text="Chats" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="28.0" layoutY="37.0" text="Create new conversation" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Line endX="19.999984741210938" endY="3.814697265625E-6" layoutX="99.0" layoutY="33.0" startX="-100.0" stroke="#363d45" />
          </children>
       </AnchorPane>
       <TextField fx:id="messageTextField" layoutX="254.0" layoutY="618.0" prefHeight="25.0" prefWidth="400.0" promptText="Write.." />
