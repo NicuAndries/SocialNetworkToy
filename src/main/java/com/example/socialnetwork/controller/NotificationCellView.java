@@ -39,7 +39,7 @@ public class NotificationCellView extends ListCell<Eveniment> {
         } else {
             labelName.setText(friend.getName());
             labelHistoryInfo.setText("You have an upcoming event, tommorow at: " + friend.getTime());
-            Image image = new Image("@../../images/imagine3.jpg");
+            Image image = new Image(friend.getImage());
             userImage.setImage(image);
             setText(null);
             setGraphic(notificationCell);

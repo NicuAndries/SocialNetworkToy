@@ -32,7 +32,7 @@
                   </font>
               </Label>
               <Hyperlink fx:id="viewHistoryRequests" layoutX="16.0" layoutY="62.0" onAction="#onViewHistoryRequests" text="View history requests" />
-              <TextField fx:id="searchFriendsTextField" layoutX="484.0" layoutY="58.0" prefHeight="25.0" prefWidth="157.0" promptText="Search" />
+              <TextField fx:id="searchTextField" layoutX="484.0" layoutY="58.0" prefHeight="25.0" prefWidth="157.0" promptText="Search" />
               <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="462.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/imagine4.png" />

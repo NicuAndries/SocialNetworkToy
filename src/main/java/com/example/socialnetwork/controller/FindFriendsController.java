@@ -25,7 +25,7 @@ public class FindFriendsController implements Observer<RequestChangedEvent> {
     public Hyperlink viewReceivedRequests;
     public Hyperlink viewHistoryRequests;
     private ObservableList<User> findfriendsObservableList = FXCollections.observableArrayList();
-    public TextField searchFriendsTextField;
+    public TextField searchTextField;
     public Hyperlink viewSentRequests;
     public Pane historyRequestsPane;
     public Pane friendRequestsPane;
@@ -40,7 +40,9 @@ public class FindFriendsController implements Observer<RequestChangedEvent> {
 
     @FXML
     public void initialize() {
-        findFriendListView.setItems(findfriendsObservableList);
+        filteredList = new FilteredList<>(findfriendsObservableList);
+        searchTextField.textProperty().addListener(object -> handleFilter());
+        findFriendListView.setItems(filteredList);
         findFriendListView.setCellFactory(userListView -> new FindFriendsCellView(page));
         try{
             FXMLLoader historyLoader = new FXMLLoader(getClass().getClassLoader().getResource("historyRequestsPane.fxml"));
@@ -83,7 +85,7 @@ public class FindFriendsController implements Observer<RequestChangedEvent> {
     }
 
     private void handleFilter() {
-       String filter = searchFriendsTextField.getText();
+       String filter = searchTextField.getText();
         if (filter == null || filter.length() == 0) {
             filteredList.setPredicate(s -> true);
         } else {
@@ -94,8 +96,8 @@ public class FindFriendsController implements Observer<RequestChangedEvent> {
 
     @Override
     public void update(RequestChangedEvent requestChangeEvent) {
-        findFriendListView.getItems().clear();
-        findFriendListView.refresh();
+      //  findFriendListView.getItems().clear();
+     //   findFriendListView.refresh();
         populate();
     }
 

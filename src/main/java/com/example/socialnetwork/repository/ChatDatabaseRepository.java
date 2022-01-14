@@ -114,7 +114,7 @@ public class ChatDatabaseRepository implements Repository<Long, Chat> {
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return entity;
     }

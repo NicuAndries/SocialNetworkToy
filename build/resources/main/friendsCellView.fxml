@@ -14,7 +14,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <Button fx:id="unfriendButton" layoutX="517.0" layoutY="28.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="98.0" style="-fx-background-color: blue;" text="Unfriend" textFill="WHITE">
+        <Button fx:id="unfriendButton" layoutX="517.0" layoutY="28.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="98.0" style="-fx-background-color: #5F9EA0;" text="Unfriend" textFill="WHITE">
             <graphic>
                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                     <image>

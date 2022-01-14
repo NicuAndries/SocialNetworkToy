@@ -16,7 +16,7 @@
                 <Font name="Arial Bold" size="24.0" />
             </font>
         </Label>
-        <TextField layoutX="508.0" layoutY="11.0" promptText="Search a friend.." />
+        <TextField fx:id="searchTextField" layoutX="508.0" layoutY="11.0" promptText="Search a friend.." />
         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="484.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/imagine4.png" />
