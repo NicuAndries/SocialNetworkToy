@@ -48,7 +48,7 @@
       <Line endX="-110.0" endY="-51.90000534057617" layoutX="110.0" layoutY="84.0" startX="2.89288330078125" startY="-51.900001525878906" stroke="#363d45" />
       <Button fx:id="selectImageButton" layoutX="317.0" layoutY="14.0" mnemonicParsing="false" prefHeight="153.0" prefWidth="222.0" style="-fx-background-color: transparent;">
          <graphic>
-            <ImageView fx:id="eventImage" fitHeight="150.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="chatImage" fitHeight="150.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/addImageAlb.png" />
                </image>

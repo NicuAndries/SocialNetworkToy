@@ -5,6 +5,8 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
@@ -13,21 +15,21 @@
 <AnchorPane prefHeight="443.0" prefWidth="600.0" style="-fx-background-color: #242131;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.socialnetwork.controller.ChatCreatorController">
    <children>
       <ListView fx:id="friendListView" layoutY="39.0" prefHeight="410.0" prefWidth="200.0" style="-fx-background-color: #1D232A;" />
-      <Label layoutX="217.0" layoutY="23.0" text="To:" textFill="WHITE">
+      <Label layoutX="219.0" layoutY="187.0" text="To:" textFill="WHITE">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="217.0" layoutY="64.0" text="Chat name:" textFill="WHITE">
+      <Label layoutX="217.0" layoutY="227.0" text="Chat name:" textFill="WHITE">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="217.0" layoutY="104.0" prefHeight="18.0" prefWidth="60.0" text="Message:" textFill="WHITE">
+      <Label layoutX="219.0" layoutY="265.0" prefHeight="18.0" prefWidth="60.0" text="Message:" textFill="WHITE">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <TextField fx:id="chatNameTextField" layoutX="293.0" layoutY="59.0" prefHeight="26.0" prefWidth="289.0" />
-      <TextArea fx:id="createChatMessageTextField" layoutX="293.0" layoutY="102.0" prefHeight="286.0" prefWidth="290.0" />
-      <TextField fx:id="toTextField" layoutX="293.0" layoutY="18.0" prefHeight="26.0" prefWidth="289.0" />
+      <TextField fx:id="chatNameTextField" layoutX="293.0" layoutY="224.0" prefHeight="26.0" prefWidth="289.0" />
+      <TextArea fx:id="createChatMessageTextField" layoutX="293.0" layoutY="265.0" prefHeight="123.0" prefWidth="290.0" />
+      <TextField fx:id="toTextField" layoutX="293.0" layoutY="184.0" prefHeight="26.0" prefWidth="289.0" />
       <Button fx:id="createChatButton" layoutX="368.0" layoutY="400.0" mnemonicParsing="false" onAction="#onCreateChatButton" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: blue;" text="Send" textFill="WHITE">
          <font>
             <Font size="14.0" />
@@ -44,5 +46,19 @@
       </Label>
       <Line endX="100.0" endY="-75.0" layoutX="100.0" layoutY="74.0" startX="100.0" startY="375.3999938964844" stroke="#363d45" />
       <Line endX="-110.0" endY="-51.90000534057617" layoutX="110.0" layoutY="84.0" startX="2.89288330078125" startY="-51.900001525878906" stroke="#363d45" />
+      <Button fx:id="selectImageButton" layoutX="317.0" layoutY="14.0" mnemonicParsing="false" prefHeight="153.0" prefWidth="222.0" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fx:id="chatImage" fitHeight="150.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/addImageAlb.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="217.0" layoutY="83.0" text="Chat image:" textFill="WHITE">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

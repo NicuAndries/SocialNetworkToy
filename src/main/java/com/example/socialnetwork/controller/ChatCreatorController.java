@@ -14,7 +14,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +31,11 @@ public class ChatCreatorController implements Initializable {
     public TextArea createChatMessageTextField;
     public Button createChatButton;
     public Button cancelButton;
+    public Button selectImageButton;
     public TextField toTextField;
+    public ImageView chatImage;
+    public String selectedImage;
+    public String image = "@../../images/addImageAlb.png";
     private ObservableList<Friend> friendsObservableList = FXCollections.observableArrayList();
     List<Long> usersId;
     Page page;
@@ -39,22 +48,40 @@ public class ChatCreatorController implements Initializable {
 
         friendListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+
+        FileChooser fileChooser = new FileChooser();
+        Stage stage = new Stage();
+
+        selectImageButton.setOnAction((event) -> {
+            File file = fileChooser.showOpenDialog(stage);
+            if (file != null) {
+                selectedImage = file.toURI().toString();
+                chatImage.setImage(new Image(selectedImage));
+            }
+        });
+
+
         friendListView.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends Friend> ov, Friend old_val, Friend new_val) -> {
             ObservableList<Friend> selectedItems = friendListView.getSelectionModel().getSelectedItems();
             numberOfSelectedElements = (long) selectedItems.size();
             StringBuilder builder = new StringBuilder();
             usersId = new ArrayList<>();
             usersId.add(page.getIdUser());
-            for (int i=0; i<selectedItems.size(); i++) {
-                builder.append(selectedItems.get(i).getFirstName()).append(" ").append(selectedItems.get(i).getLastName()).append("   ");
-                usersId.add(selectedItems.get(i).getId());
+            for (Friend selectedItem : selectedItems) {
+                builder.append(selectedItem.getFirstName()).append(" ").append(selectedItem.getLastName()).append("   ");
+                usersId.add(selectedItem.getId());
             }
-            System.out.println(builder.toString());
             toTextField.setText(builder.toString());
-            if (selectedItems.size() == 1)
-                chatNameTextField.setText(selectedItems.get(0).getFirstName() + " "  + selectedItems.get(0).getLastName());
-            else
+            if (selectedItems.size() == 1) {
+                chatNameTextField.setText(selectedItems.get(0).getFirstName() + " " + selectedItems.get(0).getLastName());
+                image = selectedItems.get(0).getProfilePicture();
+                chatImage.setImage(new Image(image));
+            }
+            else {
                 chatNameTextField.setText("");
+                image = "@../../images/addImageAlb.png";
+                chatImage.setImage(new Image(image));
+            }
         });
     }
 
@@ -85,9 +112,12 @@ public class ChatCreatorController implements Initializable {
                         return;
                     }
                 chat = new Chat(page.getUser().getFirstName() + " " + page.getUser().getLastName() + " " + chatNameTextField.getText());
+                chat.setImage(image);
             }
-            else
+            else {
                 chat = new Chat(chatNameTextField.getText());
+                chat.setImage(selectedImage);
+            }
         } catch (ServiceException | ValidationException | RepositoryException e) {
             System.out.println(e.getMessage());
         }
@@ -102,5 +132,6 @@ public class ChatCreatorController implements Initializable {
     }
 
     public void onCancelButton(ActionEvent actionEvent) {
+        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }
 }

@@ -31,7 +31,9 @@ public class ChatDatabaseRepository implements Repository<Long, Chat> {
             }
             resultSet.next();
             String name = resultSet.getString("name");
+            String image = resultSet.getString("image");
             Chat chat = new Chat(name);
+            chat.setImage(image);
             chat.setMembers(getMembers(id));
             chat.setId(id);
             return chat;
@@ -68,8 +70,10 @@ public class ChatDatabaseRepository implements Repository<Long, Chat> {
             while (resultSet.next()) {
                 long id = resultSet.getLong("chat_id");
                 String name = resultSet.getString("name");
+                String image = resultSet.getString("image");
                 List<Long> members = getMembers(id);
                 Chat chat = new Chat(name);
+                chat.setImage(image);
                 chat.setMembers(members);
                 chat.setId(id);
                 chats.add(chat);
@@ -83,10 +87,11 @@ public class ChatDatabaseRepository implements Repository<Long, Chat> {
 
     @Override
     public Chat save(Chat entity) throws IllegalArgumentException {
-        String sql = "insert into chats (name) values (?) returning chat_id";
+        String sql = "insert into chats (name, image) values (?, ?) returning chat_id";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, entity.getName());
+            ps.setString(2, entity.getImage());
             ResultSet resultSet = ps.executeQuery();
             resultSet.next();
             Long id = resultSet.getLong("chat_id");

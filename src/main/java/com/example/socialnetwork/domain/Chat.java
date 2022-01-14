@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Chat extends Entity<Long>{
     private String name;
+    private String image;
     private List<Long> chatMembers;
 
     public Chat(String name) {
@@ -20,6 +21,14 @@ public class Chat extends Entity<Long>{
 
     public List<Long> getMembers() {
         return chatMembers;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public void setMembers(List<Long> members) {

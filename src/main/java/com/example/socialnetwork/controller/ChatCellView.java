@@ -60,17 +60,12 @@ public class ChatCellView extends ListCell<Chat> {
             } else if(chat.getMembers().size() == 2 && page.getIdUser().equals(chat.getMembers().get(1))) {
                 List<String> name = List.of(chat.getName().split(" "));
                 chatName.setText(name.get(0) + " " + name.get(1));
-                try {
-                    User user = page.getServiceUser().findOne(chat.getMembers().get(0));
-                    Image image = new Image(user.getProfilePicture());
-                    userImage.setImage(image);
-                } catch (ServiceException e) {
-                    e.printStackTrace();
-                }
+                Image image = new Image(chat.getImage());
+                userImage.setImage(image);
             }
             else {
                 chatName.setText(chat.getName());
-                Image image = new Image("@../../images/defaultGroupImage.jpg");
+                Image image = new Image(chat.getImage());
                 userImage.setImage(image);
             }
             deleteChatButton.setOnAction(event -> {
