@@ -16,6 +16,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 
 public class MessageCellView extends ListCell<Message> {
     public Text replyToText;
@@ -43,10 +46,12 @@ public class MessageCellView extends ListCell<Message> {
     @Override
     protected void updateItem(Message friend, boolean empty) {
         super.updateItem(friend, empty);
+        final Tooltip tooltip = new Tooltip();
 
         if (empty || friend == null) {
             setText(null);
             setGraphic(null);
+            setTooltip(null);
         } else {
 
             if (friend.getUserSenderId().equals(page.getIdUser())) {
@@ -66,6 +71,7 @@ public class MessageCellView extends ListCell<Message> {
                         imageView.setFitHeight(21);
                         imageView.setFitWidth(21);
 
+
                         ImageView imageView2 = new ImageView(image);
                         imageView2.setFitHeight(65);
                         imageView2.setFitWidth(65);
@@ -73,6 +79,9 @@ public class MessageCellView extends ListCell<Message> {
                         hBox.getChildren().addAll(imageView, button, imageView2);
                         hBox.setAlignment(Pos.CENTER_RIGHT);
 
+                        String name = "Sender: " + user.getFirstName() + " " + user.getLastName() + "\n";
+                        tooltip.setText(name + "Sent at: " + friend.getTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+                        setTooltip(tooltip);
                     } catch (ServiceException e) {
                         e.printStackTrace();
                     }
@@ -120,6 +129,10 @@ public class MessageCellView extends ListCell<Message> {
                             hBox.getChildren().addAll(vBox, imageView2);
                             hBox.setAlignment(Pos.CENTER_RIGHT);
 
+                            String name = "Sender: " + user.getFirstName() + " " + user.getLastName() + "\n";
+                            tooltip.setText(name + "Sent at: " + friend.getTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+                            setTooltip(tooltip);
+
                         } catch (ServiceException exception) {
                             System.out.println(exception.getMessage());
                         }
@@ -153,6 +166,10 @@ public class MessageCellView extends ListCell<Message> {
 
                         hBox.getChildren().addAll(imageView2, button, imageView);
                         hBox.setAlignment(Pos.CENTER_LEFT);
+
+                        String name = "Sender: " + user.getFirstName() + " " + user.getLastName() + "\n";
+                        tooltip.setText(name + "Sent at: " + friend.getTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+                        setTooltip(tooltip);
 
                     } catch (ServiceException e) {
                         e.printStackTrace();
@@ -199,9 +216,12 @@ public class MessageCellView extends ListCell<Message> {
                             vBox.setAlignment(Pos.CENTER_LEFT);
                             vBox.setLayoutY(3);
 
-
                             hBox.getChildren().addAll(imageView2, vBox);
                             hBox.setAlignment(Pos.CENTER_LEFT);
+
+                            String name = "Sender: " + user.getFirstName() + " " + user.getLastName() + "\n";
+                            tooltip.setText(name + "Sent at: " + friend.getTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+                            setTooltip(tooltip);
                         } catch (ServiceException exception) {
                             System.out.println(exception.getMessage());
                         }
