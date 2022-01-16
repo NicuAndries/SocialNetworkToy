@@ -48,7 +48,7 @@ public class Page {
         return serviceMessage;
     }
 
-    public void setIdUser(Long user_id) throws CredentialException {
+    public void setUserId(Long user_id) throws CredentialException {
         try {
             userService.findOne(user_id);
         } catch (ServiceException e) {

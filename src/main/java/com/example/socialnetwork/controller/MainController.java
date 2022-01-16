@@ -55,7 +55,7 @@ public class MainController {
         this.friendRequestService = friendRequestService;
         this.page = page;
         try {
-            this.page.setIdUser(user_id);
+            this.page.setUserId(user_id);
         } catch (CredentialException exception) {
             System.out.println(exception.getMessage());
         }
